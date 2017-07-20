@@ -1,0 +1,14 @@
+{
+  "name": "back-end-test",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "author": "yun_cloud <ookk8282@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
