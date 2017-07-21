@@ -1,5 +1,7 @@
 const express = require('express')
 
+const workshopTable = require('../table/workshop.js')
+
 const router = express.Router()
 
 const baseUrl = '/workshops'
