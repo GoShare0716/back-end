@@ -2,7 +2,13 @@ const express = require('express')
 
 const workshopTable = require('../table/workshop.js')
 
+const {
+  friendThumbnail
+} = require('../util.js')
+
 const router = express.Router()
+
+const userId = 2
 
 const baseUrl = '/workshops'
 
@@ -15,7 +21,10 @@ router.post(`${baseUrl}`, (req, res, next) => {
 
 // List {{{1
 router.get(`${baseUrl}`, (req, res, next) => {
-
+  const friends
+  res.json(workshopTable
+    .map(workshop => ({...workshop}))
+  )
 })
 
 // View {{{1
@@ -37,9 +46,11 @@ router.put(`${baseUrl}/:id`, (req, res, next) => {
 router.delete(`${baseUrl}/:id`, (req, res, next) => {
 
 })
+
+// util {{{1
+
 // }}}
 
 module.exports = router
 
-// vim-modeline {{{1
 // vim:set et sw=2 ts=8 fdm=marker:

@@ -1,14 +1,21 @@
 const express = require('express')
 
+// data
 const skillTable = require('../table/skill.js')
-const userTable = require('../table/user.js')
 const {
   voteSkillTable,
   equipSkillTable
 } = require('../table/foreign.js')
 const {
-  friends
+  friendLists
 } = require('../table/other.js')
+
+// util function
+const {
+  friendThumbnail,
+  select,
+  reject
+} = require('../util.js')
 
 const router = express.Router()
 
@@ -63,12 +70,12 @@ router.put(`${baseUrl}/:id`, (req, res, next) => {
   res.json(skill)
 })
 
-// utils {{{1
+// util {{{1
 
 function addExtraProp (skill) {
   const id = skill.id
   let ret = Object.assign(skill, levelCount(id))
-  ret.friends = friends[id - 1].map(friendThumbnail)
+  ret.friends = friendLists[userId - 1].map(friendThumbnail)
   ret.level = (voteSkillTable
     .find(vote => {
       return vote.skillId === id && vote.userId === userId
@@ -86,33 +93,6 @@ function levelCount (skillId) {
   return {
     basicNumber,
     advancedNumber
-  }
-}
-
-function friendThumbnail (id) {
-  return {
-    id,
-    thumbnailUrl: userTable[id - 1].thumbnailUrl
-  }
-}
-
-function select (props) {
-  return obj => {
-    let ret = {}
-    for (let prop of props) {
-      ret[prop] = obj[prop]
-    }
-    return ret
-  }
-}
-
-function reject (props) {
-  return obj => {
-    let ret = obj
-    for (let prop of props) {
-      delete ret[prop]
-    }
-    return ret
   }
 }
 

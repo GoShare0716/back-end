@@ -1,9 +1,9 @@
-const friends = [
+const friendLists = [
   [1],
   [2, 3],
   []
 ]
 
 module.exports = {
-  friends
+  friendLists
 }
