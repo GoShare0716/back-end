@@ -1,4 +1,15 @@
-const userTable = require('../table/user.js')
+const userTable = require('./table/user.js')
+const {
+  friendLists
+} = require('./table/other.js')
+
+function isFriend (userId) {
+  const friendList = friendLists[userId - 1]
+  return function (id) {
+    // eg, ids.filter(isFriend(userId))
+    return friendList.indexOf(id) !== -1
+  }
+}
 
 function friendThumbnail (id) {
   return {
@@ -28,6 +39,7 @@ function reject (props) {
 }
 
 module.exports = {
+  isFriend,
   friendThumbnail,
   select,
   reject

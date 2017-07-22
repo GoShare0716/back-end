@@ -6,12 +6,10 @@ const {
   voteSkillTable,
   equipSkillTable
 } = require('../table/foreign.js')
-const {
-  friendLists
-} = require('../table/other.js')
 
 // util function
 const {
+  isFriend,
   friendThumbnail,
   select,
   reject
@@ -21,7 +19,7 @@ const router = express.Router()
 
 const baseUrl = '/skills'
 
-const userId = 2
+const userId = 2 // current user Id
 
 // Create {{{1
 router.post(`${baseUrl}`, (req, res, next) => {
@@ -32,7 +30,7 @@ router.post(`${baseUrl}`, (req, res, next) => {
 
 // List {{{1
 router.get(`${baseUrl}`, (req, res, next) => {
-  res.json(skillTable.map(addExtraProp))
+  res.json(skillTable.map(addExtraProp(userId)))
 })
 
 // View {{{1
@@ -40,7 +38,7 @@ router.get(`${baseUrl}/:id`, (req, res, next) => {
   let {id} = req.params
   id = +id
   const skill = skillTable[id - 1]
-  res.json(addExtraProp(skill))
+  res.json(addExtraProp(userId)(skill))
 })
 
 // Vote {{{1
@@ -72,15 +70,17 @@ router.put(`${baseUrl}/:id`, (req, res, next) => {
 
 // util {{{1
 
-function addExtraProp (skill) {
-  const id = skill.id
-  let ret = Object.assign(skill, levelCount(id))
-  ret.friends = friendLists[userId - 1].map(friendThumbnail)
-  ret.level = (voteSkillTable
-    .find(vote => {
-      return vote.skillId === id && vote.userId === userId
-    }) || {level: 'none'}).level
-  return ret
+function addExtraProp (userId) {
+  return function (skill) {
+    const id = skill.id
+    let ret = Object.assign(skill, levelCount(id))
+    ret.friends = votedFriends(id, userId)
+    ret.level = (voteSkillTable
+      .find(vote => {
+        return vote.skillId === id && vote.userId === userId
+      }) || {level: 'none'}).level
+    return ret
+  }
 }
 
 function levelCount (skillId) {
@@ -94,6 +94,14 @@ function levelCount (skillId) {
     basicNumber,
     advancedNumber
   }
+}
+
+function votedFriends (skillId, userId) {
+  return voteSkillTable
+    .filter(vote => vote.skillId === skillId)
+    .map(vote => vote.userId)
+    .filter(isFriend(userId))
+    .map(friendThumbnail)
 }
 
 // }}}
