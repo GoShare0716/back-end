@@ -1,11 +1,14 @@
 const express = require('express')
 
 const workshopTable = require('../table/workshop.js')
+const userTable = require('../table/user.js')
 const {
-  attendWorkshopTable
+  attendWorkshopTable,
+  createWorkshopTable
 } = require('../table/foreign.js')
 
 const {
+  select,
   isFriend,
   friendInfo
 } = require('../util.js')
@@ -45,7 +48,21 @@ router.get(`${baseUrl}`, (req, res, next) => {
 
 // View {{{1
 router.get(`${baseUrl}/:id`, (req, res, next) => {
+  const workshopId = +req.params.id
 
+  const workshop = workshopTable[workshopId - 1]
+  const x = attendeesNumber(workshopId, userId)
+
+  res.json(Object.assign(
+    workshop,
+    attendState(workshopId, userId),
+    {
+      friends: attendedFriends(workshopId, userId),
+      attendeesNumber: x,
+      phase: phase(workshop, x),
+      author: authorInfo(workshopId)
+    }
+  ))
 })
 
 // Attendees {{{1
@@ -119,6 +136,19 @@ function attendState (workshopId, userId) { // {{{2
     canceled: (myAttend && myAttend.canceled) || false,
     attended: (myAttend && myAttend.canceled === false) || false
   }
+}
+
+function authorInfo (workshopId) { // {{{2
+  const userId = createWorkshopTable
+    .filter(create => create.workshopId === workshopId)
+    .map(create => create.userId)
+    .pop()
+  if (userId === undefined) {
+    const err = new Error('This workshop doesn\'t exist in createWorkshopTable.')
+    throw err
+  }
+  const author = userTable.filter(user => user.id === userId)
+  return select(['id', 'name', 'selfIntroduction'])(author)
 }
 
 // END {{{1
