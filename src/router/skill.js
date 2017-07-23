@@ -35,17 +35,15 @@ router.get(`${baseUrl}`, (req, res, next) => {
 
 // View {{{1
 router.get(`${baseUrl}/:id`, (req, res, next) => {
-  let {id} = req.params
-  id = +id
-  const skill = skillTable[id - 1]
+  const skillId = +req.params.id
+  const skill = skillTable[skillId - 1]
   res.json(addExtraProp(userId)(skill))
 })
 
 // Vote {{{1
 router.post(`${baseUrl}/:id/vote`, (req, res, next) => {
-  let {id} = req.params
-  id = +id
-  res.json(levelCount(id))
+  const skillId = +req.params.id
+  res.json(levelCount(skillId))
 })
 
 //  Equip {{{1
@@ -61,9 +59,8 @@ router.post(`${baseUrl}/:id/equip`, (req, res, next) => {
 
 // Update {{{1
 router.put(`${baseUrl}/:id`, (req, res, next) => {
-  let {id} = req.params
-  id = +id
-  const skill = skillTable.slice(id - 1, id)[0]
+  const skillId = +req.params.id
+  const skill = skillTable.slice(skillId - 1, skillId)[0]
   skill.updatedAt = Date.now()
   res.json(skill)
 })
