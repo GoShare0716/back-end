@@ -65,6 +65,31 @@ router.get(`${baseUrl}/:id`, (req, res, next) => {
   ))
 })
 
+// Attend {{{1
+router.post(baseUrl + '/:id', (req, res, next) => {
+  // develop only, return value based on workshopId
+  const workshopId = +req.params.id
+  switch (workshopId % 3) {
+    case 1:
+      res.json({
+        attended: false,
+        canceled: false
+      })
+      break
+    case 2:
+      res.json({
+        attended: true,
+        canceled: false
+      })
+      break
+    default:
+      res.json({
+        attended: false,
+        canceled: true
+      })
+  }
+})
+
 // Attendees {{{1
 router.get(`${baseUrl}/:id/attendees`, (req, res, next) => {
 
@@ -139,16 +164,20 @@ function attendState (workshopId, userId) { // {{{2
 }
 
 function authorInfo (workshopId) { // {{{2
-  const userId = createWorkshopTable
+  const authorId = createWorkshopTable
     .filter(create => create.workshopId === workshopId)
     .map(create => create.userId)
     .pop()
-  if (userId === undefined) {
+  if (authorId === undefined) {
     const err = new Error('This workshop doesn\'t exist in createWorkshopTable.')
     throw err
   }
-  const author = userTable.filter(user => user.id === userId)
-  return select(['id', 'name', 'selfIntroduction'])(author)
+  const author = userTable.filter(user => user.id === authorId).pop()
+  if (author === undefined) {
+    const err = new Error('The author of this workshop is a GHOST!!!(not in userTable)')
+    throw err
+  }
+  return select(['id', 'name', 'introduction'])(author)
 }
 
 // END {{{1
