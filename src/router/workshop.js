@@ -92,17 +92,29 @@ router.post(baseUrl + '/:id', (req, res, next) => {
 
 // Attendees {{{1
 router.get(`${baseUrl}/:id/attendees`, (req, res, next) => {
-
+  const workshopId = +req.params.id
+  res.json(attendWorkshopTable
+    .filter(attend => attend.workshopId === workshopId)
+    .map(attend => attend.userId)
+    .map(userId => userTable[userId - 1])
+  )
 })
 
 // Update {{{1
 router.put(`${baseUrl}/:id`, (req, res, next) => {
-
+  const workshopId = +req.params.id
+  const workshop = workshopTable[workshopId - 1]
+  res.json(Object.assign({},
+    workshop,
+    {
+      updatedAt: Date.now()
+    }
+  ))
 })
 
 // Delete {{{1
 router.delete(`${baseUrl}/:id`, (req, res, next) => {
-
+  res.sendStatus(200)
 })
 
 // util {{{1
