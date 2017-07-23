@@ -21,7 +21,7 @@ app.use(API_URL, skillRouter)
 app.use(API_URL, userRouter)
 app.use(API_URL, workshopRouter)
 app.get('/', (req, res) => {
-  res.send('Unknown api')
+  res.sendStatus(404)
 })
 app.get('/*', (req, res) => res.redirect('/'))
 
