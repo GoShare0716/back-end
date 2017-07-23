@@ -20,14 +20,14 @@ const userId = 2 // current user Id
 const baseUrl = '/workshops'
 
 // Create {{{1
-router.post(`${baseUrl}`, (req, res, next) => {
+router.post(baseUrl, (req, res, next) => {
   res.json({
     id: 1
   })
 })
 
 // List {{{1
-router.get(`${baseUrl}`, (req, res, next) => {
+router.get(baseUrl, (req, res, next) => {
   function addExtraProp (userId) {
     return function (workshop) {
       const id = workshop.id
@@ -47,7 +47,7 @@ router.get(`${baseUrl}`, (req, res, next) => {
 })
 
 // View {{{1
-router.get(`${baseUrl}/:id`, (req, res, next) => {
+router.get(baseUrl + '/:id', (req, res, next) => {
   const workshopId = +req.params.id
 
   const workshop = workshopTable[workshopId - 1]
@@ -91,7 +91,7 @@ router.post(baseUrl + '/:id', (req, res, next) => {
 })
 
 // Attendees {{{1
-router.get(`${baseUrl}/:id/attendees`, (req, res, next) => {
+router.get(baseUrl + '/:id/attendees', (req, res, next) => {
   const workshopId = +req.params.id
   res.json(attendWorkshopTable
     .filter(attend => attend.workshopId === workshopId)
@@ -101,7 +101,7 @@ router.get(`${baseUrl}/:id/attendees`, (req, res, next) => {
 })
 
 // Update {{{1
-router.put(`${baseUrl}/:id`, (req, res, next) => {
+router.put(baseUrl + '/:id', (req, res, next) => {
   const workshopId = +req.params.id
   const workshop = workshopTable[workshopId - 1]
   res.json(Object.assign({},
@@ -113,7 +113,7 @@ router.put(`${baseUrl}/:id`, (req, res, next) => {
 })
 
 // Delete {{{1
-router.delete(`${baseUrl}/:id`, (req, res, next) => {
+router.delete(baseUrl + '/:id', (req, res, next) => {
   res.sendStatus(200)
 })
 

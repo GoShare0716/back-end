@@ -5,22 +5,22 @@ const router = express.Router()
 const baseUrl = '/users'
 
 // View {{{1
-router.get(`${baseUrl}/:id`, (req, res, next) => {
+router.get(baseUrl + '/:id', (req, res, next) => {
 
 })
 
 // Update Email {{{1
-router.put(`${baseUrl}/:id/email`, (req, res, next) => {
+router.put(baseUrl + '/:id/email', (req, res, next) => {
 
 })
 
 // Update Introduction {{{1
-router.put(`${baseUrl}/:id/introduction`, (req, res, next) => {
+router.put(baseUrl + '/:id/introduction', (req, res, next) => {
 
 })
 
 // Update available{{{1
-router.put(`${baseUrl}/:id/available`, (req, res, next) => {
+router.put(baseUrl + '/:id/available', (req, res, next) => {
 
 })
 // }}}

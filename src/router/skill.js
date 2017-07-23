@@ -22,32 +22,32 @@ const baseUrl = '/skills'
 const userId = 2 // current user Id
 
 // Create {{{1
-router.post(`${baseUrl}`, (req, res, next) => {
+router.post(baseUrl, (req, res, next) => {
   res.json({
     id: 1
   })
 })
 
 // List {{{1
-router.get(`${baseUrl}`, (req, res, next) => {
+router.get(baseUrl, (req, res, next) => {
   res.json(skillTable.map(addExtraProp(userId)))
 })
 
 // View {{{1
-router.get(`${baseUrl}/:id`, (req, res, next) => {
+router.get(baseUrl + '/:id', (req, res, next) => {
   const skillId = +req.params.id
   const skill = skillTable[skillId - 1]
   res.json(addExtraProp(userId)(skill))
 })
 
 // Vote {{{1
-router.post(`${baseUrl}/:id/vote`, (req, res, next) => {
+router.post(baseUrl + '/:id/vote', (req, res, next) => {
   const skillId = +req.params.id
   res.json(levelCount(skillId))
 })
 
 //  Equip {{{1
-router.post(`${baseUrl}/:id/equip`, (req, res, next) => {
+router.post(baseUrl + '/:id/equip', (req, res, next) => {
   // TODO: insert or delete equip
   const equippedSkills = equipSkillTable
     .filter(equip => equip.userId === userId)
@@ -58,7 +58,7 @@ router.post(`${baseUrl}/:id/equip`, (req, res, next) => {
 })
 
 // Update {{{1
-router.put(`${baseUrl}/:id`, (req, res, next) => {
+router.put(baseUrl + '/:id', (req, res, next) => {
   const skillId = +req.params.id
   const skill = skillTable[skillId - 1]
   res.json(Object.assign({}, skill, {
