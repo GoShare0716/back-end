@@ -7,7 +7,7 @@ const {
 
 const {
   isFriend,
-  friendThumbnail
+  friendInfo
 } = require('../util.js')
 
 const router = express.Router()
@@ -70,7 +70,7 @@ function attendedFriends (workshopId, userId) { // {{{2
     .filter(attend => attend.workshopId === workshopId)
     .map(attend => attend.workshopId)
     .filter(isFriend(userId))
-    .map(friendThumbnail)
+    .map(friendInfo)
 }
 
 function attendeesNumber (id) { // {{{2

@@ -10,7 +10,7 @@ const {
 // util function
 const {
   isFriend,
-  friendThumbnail,
+  friendInfo,
   select,
   reject
 } = require('../util.js')
@@ -101,7 +101,7 @@ function votedFriends (skillId, userId) {
     .filter(vote => vote.skillId === skillId)
     .map(vote => vote.userId)
     .filter(isFriend(userId))
-    .map(friendThumbnail)
+    .map(friendInfo)
 }
 
 // }}}

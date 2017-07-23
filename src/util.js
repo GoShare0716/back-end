@@ -11,7 +11,7 @@ function isFriend (userId) {
   }
 }
 
-function friendThumbnail (id) {
+function friendInfo (id) {
   return {
     id,
     thumbnailUrl: userTable[id - 1].thumbnailUrl
@@ -40,7 +40,7 @@ function reject (props) {
 
 module.exports = {
   isFriend,
-  friendThumbnail,
+  friendInfo,
   select,
   reject
 }
