@@ -32,7 +32,7 @@ router.get(`${baseUrl}`, (req, res, next) => {
     return function (workshop) {
       const id = workshop.id
       const x = attendeesNumber(id)
-      return Object.assign(workshop, {
+      return Object.assign({}, workshop, {
         friends: attendedFriends(id, userId),
         attendeesNumber: x,
         phase: phase(workshop, x)
@@ -53,7 +53,7 @@ router.get(`${baseUrl}/:id`, (req, res, next) => {
   const workshop = workshopTable[workshopId - 1]
   const x = attendeesNumber(workshopId, userId)
 
-  res.json(Object.assign(
+  res.json(Object.assign({},
     workshop,
     attendState(workshopId, userId),
     {

@@ -51,7 +51,7 @@ router.post(`${baseUrl}/:id/equip`, (req, res, next) => {
   // TODO: insert or delete equip
   const equippedSkills = equipSkillTable
     .filter(equip => equip.userId === userId)
-    .map(equip => Object.assign(equip,
+    .map(equip => Object.assign({}, equip,
       select(['id', 'name', 'category'])(skillTable[equip.skillId - 1])
     )).map(reject(['userId', 'skillId']))
   res.json({ equippedSkills })
@@ -60,9 +60,10 @@ router.post(`${baseUrl}/:id/equip`, (req, res, next) => {
 // Update {{{1
 router.put(`${baseUrl}/:id`, (req, res, next) => {
   const skillId = +req.params.id
-  const skill = skillTable.slice(skillId - 1, skillId)[0]
-  skill.updatedAt = Date.now()
-  res.json(skill)
+  const skill = skillTable[skillId - 1]
+  res.json(Object.assign({}, skill, {
+    updatedAt: Date.now()
+  }))
 })
 
 // util {{{1
