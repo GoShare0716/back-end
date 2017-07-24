@@ -1,4 +1,5 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 
 const userTable = require('../table/user.js')
 const skillTable = require('../table/skill.js')
@@ -13,6 +14,8 @@ const {
 const router = express.Router()
 
 const baseUrl = '/users'
+
+router.use(bodyParser.json())
 
 // View {{{1
 router.get(baseUrl + '/:id', (req, res, next) => {
@@ -47,21 +50,31 @@ router.get(baseUrl + '/:id', (req, res, next) => {
   ))
 })
 
-// Update Email {{{1
-router.put(baseUrl + '/:id/email', (req, res, next) => {
+// Update {{{1
+genUpdateApi('email')
+genUpdateApi('introduction')
+genUpdateApi('fbUrl')
+genUpdateApi('personalWebUrl')
+genUpdateApi('available')
 
-})
-
-// Update Introduction {{{1
-router.put(baseUrl + '/:id/introduction', (req, res, next) => {
-
-})
-
-// Update available{{{1
-router.put(baseUrl + '/:id/available', (req, res, next) => {
-
-})
+// API END {{{1
 // }}}
+
+// util {{{1
+
+function genUpdateApi (field) {
+  router.put(`${baseUrl}/:id/${field}`, (req, res, next) => {
+    const data = req.body[field]
+    if (data === undefined) {
+      const err = new Error(`Data not found.(User Update ${field})`)
+      err.status = 400
+      throw err
+    }
+    let obj = {}
+    obj[field] = data
+    res.json(obj)
+  })
+}
 
 module.exports = router
 
