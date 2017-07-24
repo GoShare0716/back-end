@@ -70,14 +70,13 @@ router.put(baseUrl + '/:id', (req, res, next) => {
 
 function addExtraProp (userId) {
   return function (skill) {
-    const id = skill.id
-    let ret = Object.assign(skill, levelCount(id))
-    ret.friends = votedFriends(id, userId)
-    ret.level = (voteSkillTable
-      .find(vote => {
-        return vote.skillId === id && vote.userId === userId
-      }) || {level: 'none'}).level
-    return ret
+    const skillId = skill.id
+    return Object.assign({},
+      skill,
+      levelCount(skillId),
+      skillLevel(skillId, userId),
+      { friends: votedFriends(skillId, userId) }
+    )
   }
 }
 
@@ -100,6 +99,23 @@ function votedFriends (skillId, userId) {
     .map(vote => vote.userId)
     .filter(isFriend(userId))
     .map(friendInfo)
+}
+
+function skillLevel (skillId, userId) {
+  const isMySkill = (item) =>
+    item.skillId === skillId && item.userId === userId
+  // const voteLevel = voteSkillTable.filter(isMySkill).map(x => x.level).pop() || 'none'
+  // const equipLevel = equipSkillTable.filter(isMySkill).map(x => x.level).pop() || 'none'
+  const [voteLevel, equipLevel] = [voteSkillTable, equipSkillTable]
+    .map(table => table
+      .filter(isMySkill)
+      .map(x => x.level)
+      .pop() || 'none'
+    )
+  return {
+    voteLevel,
+    equipLevel
+  }
 }
 
 // }}}
