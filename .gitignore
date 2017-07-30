@@ -6,3 +6,4 @@ logs.txt
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 bash
+env.sh

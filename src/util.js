@@ -1,7 +1,7 @@
-const userTable = require('./table/user.js')
+const userTable = require('../database/data/user.js')
 const {
   friendLists
-} = require('./table/other.js')
+} = require('../database/data/other.js')
 
 function isFriend (userId) {
   const friendList = friendLists[userId - 1]
