@@ -5,6 +5,7 @@
   "author": "yun_cloud <ookk8282@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "app-module-path": "^2.2.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "moment": "^2.18.1",
