@@ -1,15 +1,25 @@
 const express = require('express')
+const bodyParser = require('body-parser')
+
+const model = require('src/model')
 
 const router = express.Router()
+router.use(bodyParser.json())
 
 const baseUrl = '/workshops'
 
 // Create {{{1
 router.post(baseUrl, (req, res, next) => {
+  model.workshop.create(req.body)
+    .then(id => { res.json(id) })
+    .catch(next)
 })
 
 // List {{{1
 router.get(baseUrl, (req, res, next) => {
+  model.workshop.list(req.query)
+    .then(workshops => { res.json(workshops) })
+    .catch(next)
   // function addExtraProp (userId) {
   //   return function (workshop) {
   //     const id = workshop.id

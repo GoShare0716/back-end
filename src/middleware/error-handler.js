@@ -21,7 +21,7 @@ module.exports = function (err, req, res, next) {
     statusCode,
     err,
     JSON.stringify(err),
-    Error().stack
+    err.stack
   ]
   msg = msg.join('\n')
   console.log(msg)

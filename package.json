@@ -1,7 +1,7 @@
 {
   "name": "back-end-test",
   "version": "1.0.0",
-  "main": "src/server.js",
+  "main": "server.js",
   "author": "yun_cloud <ookk8282@gmail.com>",
   "license": "MIT",
   "dependencies": {
@@ -16,11 +16,11 @@
     "standard": "^10.0.2"
   },
   "scripts": {
-    "start": "node src/server.js",
-    "watch": "nodemon src/server.js",
+    "start": "node server.js",
+    "watch": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "check": "standard src/**/*.js",
-    "fix": "standard --fix src/**/*.js",
+    "check": "standard ./**/*.js",
+    "fix": "standard --fix ./**/*.js",
     "local-db": "node database/local-db.js"
   }
 }
