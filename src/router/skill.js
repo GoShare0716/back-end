@@ -1,31 +1,18 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 
-// data
-const skillTable = require('../table/skill.js')
-const {
-  voteSkillTable,
-  equipSkillTable
-} = require('../table/foreign.js')
-
-// util function
-const {
-  isFriend,
-  friendInfo,
-  select,
-  reject
-} = require('../util.js')
+const model = require('src/model')
 
 const router = express.Router()
+router.use(bodyParser.json())
 
 const baseUrl = '/skills'
 
-const userId = 2 // current user Id
-
 // Create {{{1
 router.post(baseUrl, (req, res, next) => {
-  res.json({
-    id: 1
-  })
+  model.skill.create(req.body)
+    .then(id => { res.json(id) })
+    .catch(next)
 })
 
 // List {{{1

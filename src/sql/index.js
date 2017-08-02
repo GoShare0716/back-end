@@ -7,6 +7,9 @@ function sql (file) {
 }
 
 module.exports = {
+  skill: {
+    create: sql('./skill/create.sql')
+  },
   user: {
     profile: sql('./user/profile.sql'),
     voteSkills: sql('./user/vote-skills.sql'),
