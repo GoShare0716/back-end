@@ -3,6 +3,7 @@ const express = require('express')
 
 const accessController = require('src/middleware/access-controller')
 const errorHandler = require('src/middleware/error-handler')
+const fbChecker = require('src/middleware/fb-checker')
 
 const router = require('src/router')
 
@@ -11,6 +12,7 @@ const app = express()
 const PORT = 3000
 
 app.use(accessController)
+app.use(fbChecker)
 
 for (let prop in router) {
   app.use('/api', router[prop])
