@@ -1,3 +1,4 @@
 module.exports = {
-  create: require('./create.js')
+  create: require('./create'),
+  list: require('./list')
 }

@@ -17,7 +17,16 @@ router.post(baseUrl, (req, res, next) => {
 
 // List {{{1
 router.get(baseUrl, (req, res, next) => {
-  model.workshop.list(req.query)
+  const defaultQuery = {
+    searchText: '',
+    limit: 8,
+    offset: 0,
+    category: 'all',
+    state: 'all',
+    ordering: 'hot'
+  }
+  const query = Object.assign({}, defaultQuery, req.query)
+  model.workshop.list(query)
     .then(workshops => { res.json(workshops) })
     .catch(next)
   // function addExtraProp (userId) {
