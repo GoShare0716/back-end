@@ -1,5 +1,6 @@
 CREATE TABLE users (
     id serial PRIMARY KEY NOT NULL,
+    role             role        NOT NULL DEFAULT 'member',
     name             text        NOT NULL DEFAULT '',
     email            text        NOT NULL DEFAULT '',
     fb_id            text        NOT NULL DEFAULT '',

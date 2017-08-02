@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS skill;
 DROP TYPE IF EXISTS level;
 DROP TYPE IF EXISTS category;
 DROP TYPE IF EXISTS state;
+DROP TYPE IF EXISTS role;
 -- INDEX
 DROP INDEX IF EXISTS user_created_at_index;
 DROP INDEX IF EXISTS workshop_created_at_index;
