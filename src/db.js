@@ -2,6 +2,14 @@ const initOptions = {
   capSQL: true,
   receive: (data, result, e) => {
     camelizeColumns(data)
+  },
+  error: (error, e) => {
+    if (e.query) {
+      console.log('QUERY: ', e.query)
+    }
+    if (e.params) {
+      console.log('PARAMS: ', e.params)
+    }
   }
 }
 
