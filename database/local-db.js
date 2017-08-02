@@ -1,7 +1,8 @@
+const path = require('path')
 const pgp = require('pg-promise')()
+require('app-module-path').addPath(path.join(__dirname, '../'))
 
-require('../config.js')
-const db = pgp(process.env.DB_URL)
+const db = require('src/db')
 
 const schemaSql = require('./schema')
 const dataSql = require('./data')
