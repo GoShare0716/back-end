@@ -8,6 +8,7 @@
     "app-module-path": "^2.2.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
+    "fb": "^2.0.0",
     "moment": "^2.18.1",
     "pg-promise": "^6.3.5"
   },
