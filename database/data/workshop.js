@@ -23,6 +23,7 @@ const columnSet = new pgp.helpers.ColumnSet(
     'closing',
     'start_datetime',
     'end_datetime',
+    'reached_datetime',
     'created_at',
     'updated_at'
   ], {
@@ -51,6 +52,7 @@ var datas = [
     closing: +new Date(2017, 6, 16),
     start_datetime: +new Date(2017, 6, 7),
     end_datetime: +new Date(2017, 7, 7),
+    reached_datetime: +new Date(2017, 6, 6, 18),
     created_at: +new Date(2017, 6, 6),
     updated_at: +new Date(2017, 6, 6)
   }, {
@@ -73,6 +75,7 @@ var datas = [
     closing: +new Date(2017, 6, 24),
     start_datetime: +new Date(2017, 6, 31),
     end_datetime: +new Date(2017, 7, 14),
+    reached_datetime: 0,
     created_at: +new Date(2017, 6, 14),
     updated_at: +new Date(2017, 14)
   }, {
@@ -95,6 +98,7 @@ var datas = [
     closing: +new Date(2017, 7, 20),
     start_datetime: +new Date(2017, 8, 4),
     end_datetime: +new Date(2017, 8, 18),
+    reached_datetime: 0,
     created_at: +new Date(2017, 7, 10),
     updated_at: +new Date(2017, 7, 10)
   }
