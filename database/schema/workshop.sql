@@ -12,6 +12,7 @@ CREATE TABLE workshop (
     category         category NOT NULL,
     state            state    NOT NULL DEFAULT 'judging',
     price            integer  NOT NULL DEFAULT 0,
+    pre_price        integer  NOT NULL DEFAULT 0,
     min_number       integer  NOT NULL DEFAULT 0,
     max_number       integer  NOT NULL DEFAULT 0,
     published        boolean  NOT NULL DEFAULT FALSE,
