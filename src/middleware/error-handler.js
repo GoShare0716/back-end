@@ -1,34 +1,30 @@
 const fs = require('fs')
 const moment = require('moment')
+const R = require('ramda')
 
 module.exports = function (err, req, res, next) {
-  // console.error(err)
-
-  const log = `${moment().unix()} ERROR  ${err.stack}\n`
+  const log = `${moment().format()} ERROR: ${err.stack}\n\n`
   fs.appendFile('logs.txt', log, (err) => {
     if (err) console.error(err)
   })
 
   const status = err.status || 500
-  var statusCode
-  switch (status) {
-    case 200: statusCode = 'OK'; break
-    case 400: statusCode = 'Bad Request'; break
-    case 401: statusCode = 'Unauthorized'; break
-    default: statusCode = 'Internal Server Error'
-  }
-  var msg = [
+  const statusCode = R.cond([
+    [R.equals(200), R.always('OK')],
+    [R.equals(400), R.always('Bad Request')],
+    [R.equals(401), R.always('Unauthorized')],
+    [R.T, R.always('Internal Server Error')]
+  ])(status)
+
+  const msg = [
     statusCode,
-    err,
-    JSON.stringify(err),
-    err.stack
-  ]
-  msg = msg.join('\n')
+    err.valueOf()
+  ].join('\n')
+
+  console.log('=== msg ===')
   console.log(msg)
+  console.log('=== msg ===')
 
-    // TODO: remove this when production, security reason
+  // TODO: remove the msg(debug)
   res.status(status).send(msg)
-
-    // res.sendStatus(err.status ? err.status : 500);
-    // next(err);
 }
