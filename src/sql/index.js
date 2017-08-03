@@ -11,6 +11,7 @@ module.exports = {
     create: sql('./skill/create.sql')
   },
   user: {
+    getId: sql('./user/get-id.sql'),
     profile: sql('./user/profile.sql'),
     voteSkills: sql('./user/vote-skills.sql'),
     equipSkills: sql('./user/equip-skills.sql'),
@@ -18,6 +19,7 @@ module.exports = {
     attendWorkshops: sql('./user/attend-workshops.sql')
   },
   workshop: {
+    new: sql('./workshop/new.sql'),
     create: sql('./workshop/create.sql')
   },
   functionDeclaration: sql('./function-declaration.sql')

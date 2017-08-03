@@ -10,7 +10,15 @@ const baseUrl = '/workshops'
 
 // Create {{{1
 router.post(baseUrl, (req, res, next) => {
-  model.workshop.create(req.body)
+  const fbId = req.get('fbId')
+
+  if (fbId === undefined) {
+    const err = new Error('Need to login.(workshop-create)')
+    err.status = 401
+    throw err
+  }
+
+  model.workshop.create(fbId, req.body)
     .then(id => { res.json(id) })
     .catch(next)
 })

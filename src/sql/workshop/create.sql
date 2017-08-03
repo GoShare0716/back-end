@@ -1,15 +1,8 @@
-INSERT INTO workshop (
-    title,
-    category,
-    requirement,
-    target_audience,
-    goal
+INSERT INTO create_workshop (
+    user_id,
+    workshop_id
 )
 VALUES (
-    ${title},
-    ${category},
-    ${requirement},
-    ${targetAudience},
-    ${goal}
-)
-RETURNING id;
+    ${userId},
+    ${workshopId}
+);
