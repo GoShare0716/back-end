@@ -12,10 +12,12 @@ module.exports = (req, res, next) => {
   if (fbId !== undefined) {
     if (accessToken === undefined) { throw err }
 
-    FB.api('/me', {accessToken})
-      .then(({id}) => { if (id !== fbId) { throw err } })
+    // call next() after FB response
+    FB.api('/me', {access_token: accessToken})
+      .then(({id}) => {
+        if (id !== fbId) { throw err }
+        next()
+      })
       .catch(next)
   }
-
-  next()
 }
