@@ -1,5 +1,6 @@
 const initOptions = {
   capSQL: true,
+  promiseLib: require('bluebird'),
   receive: (data, result, e) => {
     camelizeColumns(data)
   },
@@ -10,6 +11,7 @@ const initOptions = {
     if (e.params) {
       console.log('PARAMS: ', e.params)
     }
+    console.log(error)
   }
 }
 
