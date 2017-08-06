@@ -12,7 +12,6 @@ module.exports = (req, res, next) => {
     db.oneOrNone(sql, {fbId, accessToken})
       .then(x => {
         res.locals.userId = M.toMaybe(x).map(R.prop('id'))
-        console.log('res.locals.userId: ', res.locals.userId)
       })
       .finally(() => { next() })
   } else {

@@ -9,7 +9,8 @@ function sql (file) {
 module.exports = {
   skill: {
     new: sql('./skill/new.sql'),
-    create: sql('./skill/create.sql')
+    create: sql('./skill/create.sql'),
+    view: sql('./skill/view.sql')
   },
   workshop: {
     new: sql('./workshop/new.sql'),

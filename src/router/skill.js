@@ -40,9 +40,13 @@ router.get(baseUrl, (req, res, next) => {
 
 // View
 router.get(baseUrl + '/:id', (req, res, next) => {
-  // const skillId = +req.params.id
-  // const skill = skillTable[skillId - 1]
-  // res.json(addExtraProp(userId)(skill))
+  const skillId = req.params.id
+  const userId = res.locals.userId
+    .getOrElse(-1)
+
+  model.skill.view(userId, skillId)
+    .then(skill => { res.json(skill) })
+    .catch(() => { next() })
 })
 
 // Vote
