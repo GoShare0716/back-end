@@ -8,106 +8,103 @@ router.use(bodyParser.json())
 
 const baseUrl = '/skills'
 
-// Create {{{1
+// Create
 router.post(baseUrl, (req, res, next) => {
   model.skill.create(req.body)
     .then(id => { res.json(id) })
     .catch(next)
 })
 
-// List {{{1
+// List
 router.get(baseUrl, (req, res, next) => {
-  res.json(skillTable.map(addExtraProp(userId)))
+  // res.json(skillTable.map(addExtraProp(userId)))
 })
 
-// View {{{1
+// View
 router.get(baseUrl + '/:id', (req, res, next) => {
-  const skillId = +req.params.id
-  const skill = skillTable[skillId - 1]
-  res.json(addExtraProp(userId)(skill))
+  // const skillId = +req.params.id
+  // const skill = skillTable[skillId - 1]
+  // res.json(addExtraProp(userId)(skill))
 })
 
-// Vote {{{1
+// Vote
 router.post(baseUrl + '/:id/vote', (req, res, next) => {
-  const skillId = +req.params.id
-  res.json(levelCount(skillId))
+  // const skillId = +req.params.id
+  // res.json(levelCount(skillId))
 })
 
-//  Equip {{{1
+//  Equip
 router.post(baseUrl + '/:id/equip', (req, res, next) => {
-  // TODO: insert or delete equip
-  const equippedSkills = equipSkillTable
-    .filter(equip => equip.userId === userId)
-    .map(equip => Object.assign({}, equip,
-      select(['id', 'name', 'category'])(skillTable[equip.skillId - 1])
-    )).map(reject(['userId', 'skillId']))
-  res.json({ equippedSkills })
+  // // TODO: insert or delete equip
+  // const equippedSkills = equipSkillTable
+  //   .filter(equip => equip.userId === userId)
+  //   .map(equip => Object.assign({}, equip,
+  //     select(['id', 'name', 'category'])(skillTable[equip.skillId - 1])
+  //   )).map(reject(['userId', 'skillId']))
+  // res.json({ equippedSkills })
 })
 
-// Update {{{1
+// Update
 router.put(baseUrl + '/:id', (req, res, next) => {
-  const skillId = +req.params.id
-  const skill = skillTable[skillId - 1]
-  res.json(Object.assign({}, skill, {
-    updatedAt: Date.now()
-  }))
+  // const skillId = +req.params.id
+  // const skill = skillTable[skillId - 1]
+  // res.json(Object.assign({}, skill, {
+  //   updatedAt: Date.now()
+  // }))
 })
 
-// util {{{1
+// util
 
-function addExtraProp (userId) {
-  return function (skill) {
-    const skillId = skill.id
-    return Object.assign({},
-      skill,
-      levelCount(skillId),
-      skillLevel(skillId, userId),
-      { friends: votedFriends(skillId, userId) }
-    )
-  }
-}
+// function addExtraProp (userId) {
+//   return function (skill) {
+//     const skillId = skill.id
+//     return Object.assign({},
+//       skill,
+//       levelCount(skillId),
+//       skillLevel(skillId, userId),
+//       { friends: votedFriends(skillId, userId) }
+//     )
+//   }
+// }
 
-function levelCount (skillId) {
-  const votes = voteSkillTable.filter(vote => vote.skillId === skillId)
-  const count = (votes, level) => votes
-    .filter(vote => vote.level === level)
-    .length
-  const basicNumber = count(votes, 'basic')
-  const advancedNumber = count(votes, 'advanced')
-  return {
-    basicNumber,
-    advancedNumber
-  }
-}
+// function levelCount (skillId) {
+//   const votes = voteSkillTable.filter(vote => vote.skillId === skillId)
+//   const count = (votes, level) => votes
+//     .filter(vote => vote.level === level)
+//     .length
+//   const basicNumber = count(votes, 'basic')
+//   const advancedNumber = count(votes, 'advanced')
+//   return {
+//     basicNumber,
+//     advancedNumber
+//   }
+// }
 
-function votedFriends (skillId, userId) {
-  return voteSkillTable
-    .filter(vote => vote.skillId === skillId)
-    .map(vote => vote.userId)
-    .filter(isFriend(userId))
-    .map(friendInfo)
-}
+// function votedFriends (skillId, userId) {
+//   return voteSkillTable
+//     .filter(vote => vote.skillId === skillId)
+//     .map(vote => vote.userId)
+//     .filter(isFriend(userId))
+//     .map(friendInfo)
+// }
 
-function skillLevel (skillId, userId) {
-  const isMySkill = (item) =>
-    item.skillId === skillId && item.userId === userId
-  // const voteLevel = voteSkillTable.filter(isMySkill).map(x => x.level).pop() || 'none'
-  // const equipLevel = equipSkillTable.filter(isMySkill).map(x => x.level).pop() || 'none'
-  const [voteLevel, equipLevel] = [voteSkillTable, equipSkillTable]
-    .map(table => table
-      .filter(isMySkill)
-      .map(x => x.level)
-      .pop() || 'none'
-    )
-  return {
-    voteLevel,
-    equipLevel
-  }
-}
-
-// }}}
+// function skillLevel (skillId, userId) {
+//   const isMySkill = (item) =>
+//     item.skillId === skillId && item.userId === userId
+//   // const voteLevel = voteSkillTable.filter(isMySkill).map(x => x.level).pop() || 'none'
+//   // const equipLevel = equipSkillTable.filter(isMySkill).map(x => x.level).pop() || 'none'
+//   const [voteLevel, equipLevel] = [voteSkillTable, equipSkillTable]
+//     .map(table => table
+//       .filter(isMySkill)
+//       .map(x => x.level)
+//       .pop() || 'none'
+//     )
+//   return {
+//     voteLevel,
+//     equipLevel
+//   }
+// }
 
 module.exports = router
 
-// vim-modeline {{{1
-// vim:set et sw=2 ts=8 fdm=marker:
+// vim:set et sw=2 ts=8 :
