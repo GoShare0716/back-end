@@ -11,11 +11,12 @@ const baseUrl = '/users'
 
 // me
 router.get(baseUrl + '/me', (req, res, next) => {
-  const userId = res.locals.userId // Maybe(userId)
+  const userId = res.locals.userId
+    .getOrElse(-1)
 
-  if (userId.isNothing()) { throw error.memberOnly }
+  if (userId === -1) { throw error.memberOnly }
 
-  model.user.view(userId.getOrElse(0))
+  model.user.view(userId)
     .then(ret => { res.json(ret) })
     .catch(next)
 })

@@ -2,28 +2,26 @@ const express = require('express')
 const bodyParser = require('body-parser')
 
 const model = require('src/model')
+const error = require('src/error')
 
 const router = express.Router()
 router.use(bodyParser.json())
 
 const baseUrl = '/workshops'
 
-// Create {{{1
+// Create
 router.post(baseUrl, (req, res, next) => {
-  const fbId = req.get('fbId')
+  const userId = res.locals.userId
+    .getOrElse(-1)
 
-  if (fbId === undefined) {
-    const err = new Error('Need to login.(workshop-create)')
-    err.status = 401
-    throw err
-  }
+  if (userId === -1) { throw error.memberOnly }
 
-  model.workshop.create(fbId, req.body)
+  model.workshop.create(userId, req.body)
     .then(id => { res.json(id) })
-    .catch(next)
+    .catch(() => { next() })
 })
 
-// List {{{1
+// List
 router.get(baseUrl, (req, res, next) => {
   const defaultQuery = {
     searchText: '',
@@ -55,7 +53,7 @@ router.get(baseUrl, (req, res, next) => {
   // )
 })
 
-// View {{{1
+// View
 router.get(baseUrl + '/:id', (req, res, next) => {
   // const workshopId = +req.params.id
 
@@ -74,7 +72,7 @@ router.get(baseUrl + '/:id', (req, res, next) => {
   // ))
 })
 
-// Attend {{{1
+// Attend
 router.post(baseUrl + '/:id', (req, res, next) => {
   // // develop only, return value based on workshopId
   // const workshopId = +req.params.id
@@ -99,7 +97,7 @@ router.post(baseUrl + '/:id', (req, res, next) => {
   // }
 })
 
-// Attendees {{{1
+// Attendees
 router.get(baseUrl + '/:id/attendees', (req, res, next) => {
   // const workshopId = +req.params.id
   // res.json(attendWorkshopTable
@@ -109,7 +107,7 @@ router.get(baseUrl + '/:id/attendees', (req, res, next) => {
   // )
 })
 
-// Update {{{1
+// Update
 router.put(baseUrl + '/:id', (req, res, next) => {
   // const workshopId = +req.params.id
   // const workshop = workshopTable[workshopId - 1]
@@ -121,14 +119,14 @@ router.put(baseUrl + '/:id', (req, res, next) => {
   // ))
 })
 
-// Delete {{{1
+// Delete
 router.delete(baseUrl + '/:id', (req, res, next) => {
   // res.sendStatus(200)
 })
 
-// util {{{1
+// util
 
-// function attendedFriends (workshopId, userId) { // {{{2
+// function attendedFriends (workshopId, userId) { //
 //   return attendWorkshopTable
 //     .filter(attend => attend.workshopId === workshopId)
 //     .map(attend => attend.workshopId)
@@ -136,7 +134,7 @@ router.delete(baseUrl + '/:id', (req, res, next) => {
 //     .map(friendInfo)
 // }
 
-// function attendeesNumber (id) { // {{{2
+// function attendeesNumber (id) { //
 //   return attendWorkshopTable
 //     .filter(attend => attend.workshopId === id)
 //     .filter(attend => attend.canceled === false)
@@ -144,7 +142,7 @@ router.delete(baseUrl + '/:id', (req, res, next) => {
 //     .reduce((acc, x) => acc + x, 0)
 // }
 
-// function phase (workshop, attendeesNumber) { // {{{2
+// function phase (workshop, attendeesNumber) { //
 //   const {
 //     state,
 //     deadline,
@@ -173,7 +171,7 @@ router.delete(baseUrl + '/:id', (req, res, next) => {
 //   }
 // }
 
-// function attendState (workshopId, userId) { // {{{2
+// function attendState (workshopId, userId) { //
 //   let myAttend = attendWorkshopTable
 //     .filter(attend => attend.workshopId === workshopId)
 //     .filter(attend => attend.userId === userId)
@@ -184,7 +182,7 @@ router.delete(baseUrl + '/:id', (req, res, next) => {
 //   }
 // }
 
-// function authorInfo (workshopId) { // {{{2
+// function authorInfo (workshopId) { //
 //   const authorId = createWorkshopTable
 //     .filter(create => create.workshopId === workshopId)
 //     .map(create => create.userId)
@@ -201,9 +199,9 @@ router.delete(baseUrl + '/:id', (req, res, next) => {
 //   return select(['id', 'name', 'introduction'])(author)
 // }
 
-// END {{{1
-// }}}
+// END
+//
 
 module.exports = router
 
-// vim:set et sw=2 ts=8 fdm=marker:
+// vim:set et sw=2 ts=8 :
