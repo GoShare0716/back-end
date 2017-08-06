@@ -4,6 +4,7 @@ CREATE TYPE level AS enum (
 );
 
 CREATE TYPE category AS enum (
+    'null',
     'technology',
     'aesthetics'
 );

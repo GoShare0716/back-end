@@ -1,7 +1,7 @@
 CREATE TABLE skill (
     id serial PRIMARY KEY NOT NULL,
     name        text      NOT NULL DEFAULT '',
-    category    category  NOT NULL,
+    category    category  NOT NULL DEFAULT 'null',
     description text      NOT NULL DEFAULT '',
     tag         text[]    NOT NULL DEFAULT ARRAY[]::text[],
     video_url   text      NOT NULL DEFAULT '',
