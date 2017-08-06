@@ -1,10 +1,8 @@
-INSERT INTO skill (
-    name,
-    category
+INSERT INTO create_skill (
+    user_id,
+    skill_id
 )
 VALUES (
-    ${name},
-    ${category}
-)
-RETURNING id;
-
+    ${userId},
+    ${skillId}
+);

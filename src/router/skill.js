@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 
 const model = require('src/model')
+const error = require('src/error')
 
 const router = express.Router()
 router.use(bodyParser.json())
@@ -10,9 +11,14 @@ const baseUrl = '/skills'
 
 // Create
 router.post(baseUrl, (req, res, next) => {
-  model.skill.create(req.body)
+  const userId = res.locals.userId
+    .getOrElse(-1)
+
+  if (userId === -1) { throw error.memberOnly }
+
+  model.skill.create(userId, req.body)
     .then(id => { res.json(id) })
-    .catch(next)
+    .catch(() => { next() })
 })
 
 // List
