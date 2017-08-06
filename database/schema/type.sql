@@ -1,4 +1,5 @@
 CREATE TYPE level AS enum (
+    'none',
     'basic',
     'advanced'
 );

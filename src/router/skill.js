@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const R = require('ramda')
 
 const model = require('src/model')
 const error = require('src/error')
@@ -23,7 +24,18 @@ router.post(baseUrl, (req, res, next) => {
 
 // List
 router.get(baseUrl, (req, res, next) => {
-  // res.json(skillTable.map(addExtraProp(userId)))
+  const userId = res.locals.userId
+    .getOrElse(-1)
+
+  const query = R.merge({
+    searchText: '',
+    ordering: 'alphabetical',
+    category: 'all'
+  }, req.query)
+
+  model.skill.list(userId, query)
+    .then(skills => { res.json(skills) })
+    .catch(() => { next() })
 })
 
 // View
