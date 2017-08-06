@@ -2,13 +2,25 @@ const express = require('express')
 const bodyParser = require('body-parser')
 
 const model = require('src/model')
+const error = require('src/error')
 
 const router = express.Router()
 router.use(bodyParser.json())
 
 const baseUrl = '/users'
 
-// View {{{1
+// me
+router.get(baseUrl + '/me', (req, res, next) => {
+  const userId = res.locals.userId // Maybe(userId)
+
+  if (userId.isNothing()) { throw error.memberOnly }
+
+  model.user.view(userId.getOrElse(0))
+    .then(ret => { res.json(ret) })
+    .catch(next)
+})
+
+// View
 router.get(baseUrl + '/:id', (req, res, next) => {
   const userId = +req.params.id
 
@@ -17,17 +29,14 @@ router.get(baseUrl + '/:id', (req, res, next) => {
     .catch(next)
 })
 
-// Update {{{1
+// Update
 // genUpdateApi('email')
 // genUpdateApi('introduction')
 // genUpdateApi('fbUrl')
 // genUpdateApi('personalWebUrl')
 // genUpdateApi('available')
 
-// API END {{{1
-// }}}
-
-// util {{{1
+// util
 
 // function genUpdateApi (field) {
 //   router.put(`${baseUrl}/:id/${field}`, (req, res, next) => {
@@ -45,5 +54,4 @@ router.get(baseUrl + '/:id', (req, res, next) => {
 
 module.exports = router
 
-// vim-modeline {{{1
-// vim:set et sw=2 ts=8 fdm=marker:
+// vim:set et sw=2 ts=8 :
