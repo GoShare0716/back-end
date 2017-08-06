@@ -8,7 +8,12 @@ function sql (file) {
 
 module.exports = {
   skill: {
+    new: sql('./skill/new.sql'),
     create: sql('./skill/create.sql')
+  },
+  workshop: {
+    new: sql('./workshop/new.sql'),
+    create: sql('./workshop/create.sql')
   },
   user: {
     getId: sql('./user/get-id.sql'),
@@ -17,10 +22,6 @@ module.exports = {
     equipSkills: sql('./user/equip-skills.sql'),
     createWorkshops: sql('./user/create-workshops.sql'),
     attendWorkshops: sql('./user/attend-workshops.sql')
-  },
-  workshop: {
-    new: sql('./workshop/new.sql'),
-    create: sql('./workshop/create.sql')
   },
   functionDeclaration: sql('./function-declaration.sql')
 }

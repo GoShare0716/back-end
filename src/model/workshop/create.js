@@ -1,10 +1,12 @@
 const db = require('src/db')
 const sql = require('src/sql')
 
-module.exports = (userId, body) => db.task(t => {
+module.exports = (userId, body) => db.tx(t => {
   return t.one(sql.workshop.new, body)
     .then(({ id: workshopId }) => {
-      t.none(sql.workshop.create, {workshopId, userId})
+      return t.one(sql.workshop.create, {workshopId, userId})
+    })
+    .then(({workshopId}) => {
       return { id: workshopId }
     })
 })

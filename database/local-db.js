@@ -10,7 +10,7 @@ const dataSql = require('./data')
 db.none(schemaSql)
   .then(() => {
     console.log('Schema created')
-    db.none(dataSql)
+    return db.none(dataSql)
       .then(() => {
         console.log('Data populated')
         pgp.end()

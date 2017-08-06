@@ -5,4 +5,5 @@ INSERT INTO create_workshop (
 VALUES (
     ${userId},
     ${workshopId}
-);
+)
+RETURNING workshop_id;

@@ -5,4 +5,5 @@ INSERT INTO create_skill (
 VALUES (
     ${userId},
     ${skillId}
-);
+)
+RETURNING skill_id;
