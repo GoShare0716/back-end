@@ -1,3 +1,4 @@
 module.exports = {
-  sql: require('./sql')
+  sql: require('./sql'),
+  skill: require('./skill')
 }
