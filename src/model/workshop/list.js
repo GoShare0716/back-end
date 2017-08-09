@@ -1,13 +1,15 @@
 const R = require('ramda')
 
 const db = require('src/db')
+const sql = require('src/sql')
 const utils = require('src/utils')
 
-module.exports = function (userId, query) {
+module.exports = (userId, query) => {
   // TODO state filter
   // TODO pagination
   // field: author, friends, phase
 
+  const now = Date.now()
   const order = R.cond([
     [R.equals('hot'), R.always('attendees_number DESC')],
     [R.equals('date'), R.always('start_datetime DESC')],
@@ -22,9 +24,10 @@ module.exports = function (userId, query) {
     conditions.push('category = $(category)')
   }
 
-  const sql = `
+  const listSql = `
 SELECT
   w.id,
+  w.state, -- temp
   w.image_url,
   w.title,
   w.min_number,
@@ -51,6 +54,11 @@ GROUP BY
 ORDER BY ${order}
 ;`
 
-  return db.any(sql, query)
-    .map(utils.organize(['author']))
+  return db.task(t => {
+    return t.none(sql.workshop.unreached, {now})
+      .then(() => {
+        return t.any(listSql, query)
+      })
+      .map(utils.organize(['author']))
+  })
 }

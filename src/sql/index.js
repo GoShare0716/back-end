@@ -1,5 +1,6 @@
 const QueryFile = require('pg-promise').QueryFile
 const path = require('path')
+const fs = require('fs')
 
 function sql (file) {
   const fullPath = path.join(__dirname, file)
@@ -14,7 +15,8 @@ module.exports = {
   },
   workshop: {
     new: sql('./workshop/new.sql'),
-    create: sql('./workshop/create.sql')
+    create: sql('./workshop/create.sql'),
+    unreached: sql('./workshop/unreached.sql')
   },
   user: {
     getId: sql('./user/get-id.sql'),
