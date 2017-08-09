@@ -6,5 +6,5 @@ module.exports = (userId, skillId) => db.task(t => {
   // TODO friends
   return t
     .one(sql, {userId, skillId})
-    .then(utils.skill.adapter)
+    .then(utils.organize(['vote', 'equip']))
 })

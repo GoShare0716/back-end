@@ -19,7 +19,7 @@ router.post(baseUrl, (req, res, next) => {
 
   model.skill.create(userId, req.body)
     .then(id => { res.json(id) })
-    .catch(() => { next() })
+    .catch(next)
 })
 
 // List
@@ -35,7 +35,7 @@ router.get(baseUrl, (req, res, next) => {
 
   model.skill.list(userId, query)
     .then(skills => { res.json(skills) })
-    .catch(() => { next() })
+    .catch(next)
 })
 
 // View
@@ -46,7 +46,7 @@ router.get(baseUrl + '/:id', (req, res, next) => {
 
   model.skill.view(userId, skillId)
     .then(skill => { res.json(skill) })
-    .catch(() => { next() })
+    .catch(next)
 })
 
 // Vote

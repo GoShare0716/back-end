@@ -21,9 +21,8 @@ module.exports = function (err, req, res, next) {
     err.valueOf()
   ].join('\n')
 
-  console.log('=== msg ===')
   console.log(msg)
-  console.log('=== msg ===')
+  console.log(err)
 
   // TODO: remove the msg(debug)
   res.status(status).send(msg)

@@ -1,5 +1,5 @@
 function whereClause (conditions) {
-  if (conditions.lenght === 0) { return '' }
+  if (conditions.length === 0) { return '' }
   return 'WHERE ' + conditions.join(' AND ')
 }
 

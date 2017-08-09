@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const R = require('ramda')
 
 const model = require('src/model')
 const error = require('src/error')
@@ -18,21 +19,24 @@ router.post(baseUrl, (req, res, next) => {
 
   model.workshop.create(userId, req.body)
     .then(id => { res.json(id) })
-    .catch(() => { next() })
+    .catch(next)
 })
 
 // List
 router.get(baseUrl, (req, res, next) => {
-  const defaultQuery = {
+  const userId = res.locals.userId
+    .getOrElse(-1)
+
+  const query = R.merge({
     searchText: '',
     limit: 8,
     offset: 0,
     category: 'all',
     state: 'all',
     ordering: 'hot'
-  }
-  const query = Object.assign({}, defaultQuery, req.query)
-  model.workshop.list(query)
+  }, req.query)
+
+  model.workshop.list(userId, query)
     .then(workshops => { res.json(workshops) })
     .catch(next)
   // function addExtraProp (userId) {
