@@ -1,3 +1,4 @@
+const R = require('ramda')
 const pgp = require('pg-promise')({
   capSQL: true
 })
@@ -7,11 +8,20 @@ const columnSet = new pgp.helpers.ColumnSet(
     'name',
     'category',
     'description',
-    'tag',
+    {
+      name: 'tag',
+      cast: 'text[]'
+    },
     'video_url',
     'visible',
-    'created_at',
-    'updated_at'
+    {
+      name: 'created_at',
+      def: Date.now()
+    },
+    {
+      name: 'updated_at',
+      def: Date.now()
+    }
   ], {
     table: 'skill'
   }
@@ -25,8 +35,8 @@ var datas = [
     tag: ['程式語言', 'Web'],
     video_url: 'https://www.youtube.com/watch?v=Ukg_U3CnJWI',
     visible: true,
-    created_at: 1500541846538,
-    updated_at: 1500541846538
+    created_at: +new Date(2017, 7, 12),
+    updated_at: +new Date(2017, 7, 12)
   }, {
     name: '平面設計',
     category: 'aesthetics',
@@ -34,8 +44,8 @@ var datas = [
     tag: ['Design'],
     video_url: 'https://www.youtube.com/watch?v=80kGfeEAML4',
     visible: true,
-    created_at: 1500542167429,
-    updated_at: 1500542167429
+    created_at: +new Date(2017, 7, 26),
+    updated_at: +new Date(2017, 7, 26)
   }, {
     name: 'Django',
     category: 'technology',
@@ -43,10 +53,17 @@ var datas = [
     tag: ['Web', 'Full Stack'],
     video_url: 'https://www.youtube.com/watch?v=FNQxxpM1yOs',
     visible: true,
-    created_at: 1500542493618,
-    updated_at: 1500542493618
+    created_at: +new Date(2016, 12, 30),
+    updated_at: +new Date(2016, 12, 30)
   }
-]
+].map(R.merge({
+  name: 'name',
+  category: 'null',
+  description: 'description',
+  tag: [],
+  video_url: '',
+  visible: true // development purpose, should be false
+}))
 
 module.exports = {
   columnSet,

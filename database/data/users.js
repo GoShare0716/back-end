@@ -1,3 +1,4 @@
+const R = require('ramda')
 const pgp = require('pg-promise')({
   capSQL: true
 })
@@ -12,8 +13,14 @@ const columnSet = new pgp.helpers.ColumnSet(
     'thumbnail_url',
     'picture_url',
     'introduction',
-    'available',
-    'created_at'
+    {
+      name: 'available',
+      def: genAvai()
+    },
+    {
+      name: 'created_at',
+      def: Date.now()
+    }
   ], {
     table: 'users'
   }
@@ -29,7 +36,7 @@ var datas = [
     picture_url: 'https://scontent-tpe1-1.xx.fbcdn.net/v/t1.0-1/p240x240/16426235_1335337256541448_4112461475677668738_n.jpg?oh=ad639f0d623029c602a74d6a54bb0d35&oe=5A0E3AB1',
     introduction: 'intro',
     available: genAvai(10, 16, 20),
-    created_at: 1500542940003
+    created_at: +new Date(2017, 6, 3)
   }, {
     name: '賴詰凱',
     role: 'admin',
@@ -39,7 +46,7 @@ var datas = [
     picture_url: 'https://scontent-tpe1-1.xx.fbcdn.net/v/t1.0-1/c0.93.240.240/p240x240/18622427_1859238271067164_3869120362467491071_n.jpg?oh=657cea4638763d6ebb3fc90ed90ddc4f&oe=5A02C22A',
     introduction: 'intro',
     available: genAvai(1, 2, 3, 8, 14, 15, 19, 20),
-    created_at: 1500543201840
+    created_at: +new Date(2017, 5, 12)
   }, {
     name: '林湘庭',
     role: 'member',
@@ -49,9 +56,17 @@ var datas = [
     picture_url: 'https://scontent-tpe1-1.xx.fbcdn.net/v/t1.0-1/p240x240/14915540_1715220865464246_4727687316731100143_n.jpg?oh=9527e4dbccd5eeb02dbba706ba64de92&oe=5A10AA18',
     introduction: 'intro',
     available: genAvai(0, 5, 14, 18),
-    created_at: 1500543319362
+    created_at: +new Date(2017, 5, 10)
   }
-]
+].map(R.merge({
+  name: 'name',
+  role: 'member',
+  email: 'email@google.com',
+  fb_id: '',
+  thumbnail_url: '',
+  picture_url: '',
+  introduction: 'introduction'
+}))
 
 function genAvai () {
   let arr = Array(21).fill(false)

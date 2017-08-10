@@ -1,3 +1,4 @@
+const R = require('ramda')
 const pgp = require('pg-promise')({
   capSQL: true
 })
@@ -6,9 +7,18 @@ const columnSet = new pgp.helpers.ColumnSet(
   [
     'title',
     'category',
-    'requirement',
-    'target_audience',
-    'goal',
+    {
+      name: 'requirement',
+      cast: 'text[]'
+    },
+    {
+      name: 'target_audience',
+      cast: 'text[]'
+    },
+    {
+      name: 'goal',
+      cast: 'text[]'
+    },
     'image_url',
     'description',
     'content',
@@ -25,8 +35,14 @@ const columnSet = new pgp.helpers.ColumnSet(
     'start_datetime',
     'end_datetime',
     'reached_datetime',
-    'created_at',
-    'updated_at'
+    {
+      name: 'created_at',
+      def: Date.now()
+    },
+    {
+      name: 'updated_at',
+      def: Date.now()
+    }
   ], {
     table: 'workshop'
   }
@@ -46,7 +62,7 @@ var datas = [
     price: 0,
     pre_price: 0,
     state: 'reached',
-    min_number: 10,
+    min_number: 1,
     max_number: 15,
     location: 'online',
     published: true,
@@ -105,8 +121,45 @@ var datas = [
     reached_datetime: 0,
     created_at: +new Date(2017, 7, 10),
     updated_at: +new Date(2017, 7, 10)
+  }, {
+    title: 'phase test: closed',
+    state: 'reached',
+    closing: +new Date(2017, 7, 1),
+    start_datetime: +new Date(2018, 12, 31)
+  }, {
+    title: 'phase test: over',
+    state: 'reached',
+    closing: +new Date(2017, 7, 1),
+    start_datetime: +new Date(2017, 7, 2)
+  }, {
+    title: 'phase test: reached',
+    state: 'reached',
+    closing: +new Date(2018, 12, 31),
+    start_datetime: +new Date(2018, 12, 31)
   }
-]
+].map(R.merge({
+  title: 'none',
+  category: 'technology',
+  requirement: [],
+  target_audience: [],
+  goal: [],
+  image_url: '',
+  description: 'desp',
+  content: 'cnt',
+  attended_msg: 'welcome',
+  price: 0,
+  pre_price: 0,
+  state: 'judging',
+  min_number: 1,
+  max_number: 2,
+  location: 'somewhere',
+  published: true,  // develop purpose, all true, default should be false
+  deadline: 0,
+  closing: 0,
+  start_datetime: 0,
+  end_datetime: 0,
+  reached_datetime: 0
+}))
 
 module.exports = {
   columnSet,

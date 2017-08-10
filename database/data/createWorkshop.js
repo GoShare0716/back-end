@@ -9,9 +9,12 @@ const columnSet = new pgp.helpers.ColumnSet(
 )
 
 const _datas = [
-    [1, 2],
-    [2, 3],
-    [3, 2]
+  [1, 2],
+  [2, 3],
+  [3, 2],
+  [4, 1],
+  [5, 1],
+  [6, 1]
 ]
 
 const datas = _datas.map((x) => ({
