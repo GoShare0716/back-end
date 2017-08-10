@@ -34,6 +34,7 @@ SELECT
   w.max_number,
   w.deadline,
   w.closing,
+  w.start_datetime,
   w.pre_price,
   w.price,
   COUNT(a.workshop_id)::integer AS attendees_number,
