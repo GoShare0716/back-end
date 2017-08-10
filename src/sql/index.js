@@ -1,6 +1,5 @@
 const QueryFile = require('pg-promise').QueryFile
 const path = require('path')
-const fs = require('fs')
 
 function sql (file) {
   const fullPath = path.join(__dirname, file)

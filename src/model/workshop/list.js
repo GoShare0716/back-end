@@ -7,7 +7,7 @@ const utils = require('src/utils')
 module.exports = (userId, query) => {
   // TODO state filter
   // TODO pagination
-  // field: author, friends, phase
+  // field: friends, phase
 
   const now = Date.now()
   const order = R.cond([
@@ -60,5 +60,6 @@ ORDER BY ${order}
         return t.any(listSql, query)
       })
       .map(utils.organize(['author']))
+      .map(utils.workshop.assocPhase(now))
   })
 }
