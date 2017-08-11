@@ -1,8 +1,5 @@
-const R = require('ramda')
-const M = require('ramda-fantasy').Maybe
-
 const db = require('src/db')
-const sql = require('src/sql').user.getId
+const sql = require('src/sql').user.userLoginInfo
 
 module.exports = (req, res, next) => {
   const fbId = req.get('fbId')
@@ -11,11 +8,12 @@ module.exports = (req, res, next) => {
   if (fbId !== undefined && accessToken !== undefined) {
     db.oneOrNone(sql, {fbId, accessToken})
       .then(x => {
-        res.locals.userId = M.toMaybe(x).map(R.prop('id'))
+        res.locals.login = (x !== null)
+        res.locals.user = x
       })
       .finally(() => { next() })
   } else {
-    res.locals.userId = M.Nothing()
+    res.locals.login = false
     next()
   }
 }

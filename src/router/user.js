@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 
 const model = require('src/model')
-const error = require('src/error')
+const utils = require('src/utils')
 
 const router = express.Router()
 router.use(bodyParser.json())
@@ -11,12 +11,9 @@ const baseUrl = '/users'
 
 // me
 router.get(baseUrl + '/me', (req, res, next) => {
-  const userId = res.locals.userId
-    .getOrElse(-1)
+  const user = utils.getUser(res, {loginRequired: true})
 
-  if (userId === -1) { throw error.memberOnly }
-
-  model.user.view(userId)
+  model.user.view(user.id)
     .then(ret => { res.json(ret) })
     .catch(next)
 })

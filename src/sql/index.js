@@ -18,7 +18,7 @@ module.exports = {
     unreached: sql('./workshop/unreached.sql')
   },
   user: {
-    getId: sql('./user/get-id.sql'),
+    userLoginInfo: sql('./user/user-login-info.sql'),
     profile: sql('./user/profile.sql'),
     voteSkills: sql('./user/vote-skills.sql'),
     equipSkills: sql('./user/equip-skills.sql'),

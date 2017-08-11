@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const R = require('ramda')
 
 const model = require('src/model')
-const error = require('src/error')
+const utils = require('src/utils')
 
 const router = express.Router()
 router.use(bodyParser.json())
@@ -12,20 +12,16 @@ const baseUrl = '/skills'
 
 // Create
 router.post(baseUrl, (req, res, next) => {
-  const userId = res.locals.userId
-    .getOrElse(-1)
+  const user = utils.getUser(res, {loginRequired: true})
 
-  if (userId === -1) { throw error.memberOnly }
-
-  model.skill.create(userId, req.body)
+  model.skill.create(user.id, req.body)
     .then(id => { res.json(id) })
     .catch(next)
 })
 
 // List
 router.get(baseUrl, (req, res, next) => {
-  const userId = res.locals.userId
-    .getOrElse(-1)
+  const user = utils.getUser(res)
 
   const query = R.merge({
     searchText: '',
@@ -33,7 +29,7 @@ router.get(baseUrl, (req, res, next) => {
     category: 'all'
   }, req.query)
 
-  model.skill.list(userId, query)
+  model.skill.list(user.id, query)
     .then(skills => { res.json(skills) })
     .catch(next)
 })
@@ -41,10 +37,9 @@ router.get(baseUrl, (req, res, next) => {
 // View
 router.get(baseUrl + '/:id', (req, res, next) => {
   const skillId = req.params.id
-  const userId = res.locals.userId
-    .getOrElse(-1)
+  const user = utils.getUser(res)
 
-  model.skill.view(userId, skillId)
+  model.skill.view(user.id, skillId)
     .then(skill => { res.json(skill) })
     .catch(next)
 })

@@ -23,6 +23,9 @@ module.exports = (userId, query) => {
   if (query.category !== 'all') {
     conditions.push('category = $(category)')
   }
+  if (query.state !== 'admin') {
+    conditions.push('published = false')
+  }
 
   const listSql = `
 SELECT

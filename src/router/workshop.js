@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const R = require('ramda')
 
 const model = require('src/model')
-const error = require('src/error')
+const utils = require('src/utils')
 
 const router = express.Router()
 router.use(bodyParser.json())
@@ -12,20 +12,16 @@ const baseUrl = '/workshops'
 
 // Create
 router.post(baseUrl, (req, res, next) => {
-  const userId = res.locals.userId
-    .getOrElse(-1)
+  const user = utils.getUser(res, {loginRequired: true})
 
-  if (userId === -1) { throw error.memberOnly }
-
-  model.workshop.create(userId, req.body)
+  model.workshop.create(user.id, req.body)
     .then(id => { res.json(id) })
     .catch(next)
 })
 
 // List
 router.get(baseUrl, (req, res, next) => {
-  const userId = res.locals.userId
-    .getOrElse(-1)
+  const user = utils.getUser(res)
 
   const query = R.merge({
     searchText: '',
@@ -36,7 +32,7 @@ router.get(baseUrl, (req, res, next) => {
     ordering: 'hot'
   }, req.query)
 
-  model.workshop.list(userId, query)
+  model.workshop.list(user.id, query)
     .then(workshops => { res.json(workshops) })
     .catch(next)
   // function addExtraProp (userId) {

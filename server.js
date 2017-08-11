@@ -4,14 +4,14 @@ const express = require('express')
 const router = require('src/router')
 const accessController = require('src/middleware/access-controller')
 const errorHandler = require('src/middleware/error-handler')
-const fb2userId = require('src/middleware/fb2user-id')
+const userLoginInfo = require('src/middleware/user-login-info')
 
 const app = express()
 
 const PORT = 3000
 
 app.use(accessController)
-app.use(fb2userId)
+app.use(userLoginInfo)
 
 for (let prop in router) {
   app.use('/api', router[prop])
