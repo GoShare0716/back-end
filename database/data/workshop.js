@@ -1,4 +1,5 @@
 const R = require('ramda')
+const moment = require('moment')
 const pgp = require('pg-promise')({
   capSQL: true
 })
@@ -37,16 +38,19 @@ const columnSet = new pgp.helpers.ColumnSet(
     'reached_datetime',
     {
       name: 'created_at',
-      def: Date.now()
+      def: moment().valueOf()
     },
     {
       name: 'updated_at',
-      def: Date.now()
+      def: moment().valueOf()
     }
   ], {
     table: 'workshop'
   }
 )
+
+const FUTURE = moment().add(1, 'y').valueOf()
+const PAST = moment().subtract(1, 'y').valueOf()
 
 var datas = [
   {
@@ -66,13 +70,13 @@ var datas = [
     max_number: 15,
     location: 'online',
     published: true,
-    deadline: +new Date(2017, 8, 13),
-    closing: +new Date(2017, 8, 16),
-    start_datetime: +new Date(2017, 8, 7),
-    end_datetime: +new Date(2017, 9, 7),
-    reached_datetime: +new Date(2017, 6, 6, 18),
-    created_at: +new Date(2017, 6, 6),
-    updated_at: +new Date(2017, 6, 6)
+    deadline: FUTURE,
+    closing: FUTURE,
+    start_datetime: FUTURE,
+    end_datetime: FUTURE,
+    reached_datetime: moment('2017-06-06').valueOf(),
+    created_at: PAST,
+    updated_at: PAST
   }, {
     title: '平面設計 0 基礎入門系列工作坊',
     category: 'aesthetics',
@@ -90,13 +94,13 @@ var datas = [
     max_number: 8,
     location: 'NTHU',
     published: true,
-    deadline: +new Date(2017, 7, 21),
-    closing: +new Date(2017, 7, 24),
-    start_datetime: +new Date(2017, 7, 31),
-    end_datetime: +new Date(2017, 8, 14),
+    deadline: FUTURE,
+    closing: FUTURE,
+    start_datetime: FUTURE,
+    end_datetime: FUTURE,
     reached_datetime: 0,
-    created_at: +new Date(2017, 7, 14),
-    updated_at: +new Date(2017, 7, 14)
+    created_at: moment('2017-07-14').valueOf(),
+    updated_at: moment('2017-07-14').valueOf()
   }, {
     title: '3D列印與模型建立',
     category: 'technology',
@@ -124,21 +128,25 @@ var datas = [
   }, {
     title: 'TEST: phase - closed',
     state: 'reached',
-    closing: +new Date(2017, 7, 1),
-    start_datetime: +new Date(2018, 12, 31)
+    closing: PAST,
+    start_datetime: FUTURE
   }, {
     title: 'TEST: phase - over',
     state: 'reached',
-    closing: +new Date(2017, 7, 1),
-    start_datetime: +new Date(2017, 7, 2)
+    closing: PAST,
+    start_datetime: PAST
   }, {
     title: 'TEST: phase - reached',
     state: 'reached',
-    closing: +new Date(2018, 11, 31),
-    start_datetime: +new Date(2018, 11, 31)
+    closing: FUTURE,
+    start_datetime: FUTURE
   }, {
     title: 'TEST: admin search - unpublished',
     published: false
+  }, {
+    title: 'TEST: unreached',
+    state: 'judge_ac',
+    deadline: PAST
   }
 ].map(R.merge({
   title: 'none',
