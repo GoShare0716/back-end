@@ -9,7 +9,12 @@ function getUser (res, options = {
     throw error.memberOnly
   }
 
-  return (login) ? user : { id: -1 }
+  const guest = {
+    id: -1,
+    role: 'member'
+  }
+
+  return (login) ? user : guest
 }
 
 module.exports = getUser

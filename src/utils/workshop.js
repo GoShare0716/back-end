@@ -12,7 +12,7 @@ const assocPhase = R.curry((now, workshop) => {
     [stateEqual('reached'), R.cond(
       [
         [past('startDatetime'), R.always('over')],
-        [past('closing'), R.always('closed')],
+        [past('closing'), R.always('closing')],
         [isFull, R.always('full')],
         [R.T, R.always('reached')]
       ]

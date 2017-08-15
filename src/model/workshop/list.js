@@ -4,17 +4,33 @@ const db = require('src/db')
 const sql = require('src/sql')
 const utils = require('src/utils')
 
-module.exports = (userId, query) => {
-  // TODO state filter
-  // TODO pagination
-  // field: friends, phase
+const overStateFilter = R.curry((queryState, workshop) => {
+  if (queryState === 'reached') {
+    return R.contains(workshop.phase, ['closing', 'full', 'reached'])
+  } else if (queryState === 'over') {
+    return R.equals('over')(workshop.phase)
+  } else {
+    return true
+  }
+})
+
+module.exports = (user, query) => {
+  // TODO pagination, friends, query-state
 
   const now = Date.now()
+  const isAdminSearch = (user.role === 'admin') && (query.state === 'admin')
+
   const order = R.cond([
     [R.equals('hot'), R.always('attendees_number DESC')],
     [R.equals('date'), R.always('start_datetime DESC')],
     [R.T, R.always('created_at DESC')] // new
   ])(query.ordering)
+  const stateWhitelist = R.cond([
+    [R.equals('investigating'), R.always(['judge_ac'])],
+    [R.equals('reached'), R.always(['reached'])],
+    [R.equals('over'), R.always(['reached'])],
+    [R.T, R.always(['judge_ac', 'reached'])]  // all
+  ])(query.state)
 
   const conditions = []
   if (query.searchText !== '') {
@@ -23,14 +39,15 @@ module.exports = (userId, query) => {
   if (query.category !== 'all') {
     conditions.push('category = $(category)')
   }
-  if (query.state !== 'admin') {
-    conditions.push('published = false')
+  if (!isAdminSearch) {
+    conditions.push('published = true')
+    conditions.push(`state IN ($(stateWhitelist:csv))`)
   }
 
   const listSql = `
 SELECT
   w.id,
-  w.state, -- temp
+  w.state,
   w.image_url,
   w.title,
   w.min_number,
@@ -40,6 +57,7 @@ SELECT
   w.start_datetime,
   w.pre_price,
   w.price,
+  w.published, --- filter usage, not for api
   COUNT(a.workshop_id)::integer AS attendees_number,
   u.id AS author_id,
   u.name AS author_name,
@@ -61,9 +79,10 @@ ORDER BY ${order}
   return db.task(t => {
     return t.none(sql.workshop.unreached, {now})
       .then(() => {
-        return t.any(listSql, query)
+        return t.any(listSql, R.merge(query, {stateWhitelist}))
       })
       .map(utils.organize(['author']))
       .map(utils.workshop.assocPhase(now))
+      .filter(overStateFilter(query.state))
   })
 }

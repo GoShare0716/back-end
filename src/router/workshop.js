@@ -32,7 +32,7 @@ router.get(baseUrl, (req, res, next) => {
     ordering: 'hot'
   }, req.query)
 
-  model.workshop.list(user.id, query)
+  model.workshop.list(user, query)
     .then(workshops => { res.json(workshops) })
     .catch(next)
   // function addExtraProp (userId) {

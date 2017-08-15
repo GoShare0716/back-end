@@ -66,10 +66,10 @@ var datas = [
     max_number: 15,
     location: 'online',
     published: true,
-    deadline: +new Date(2017, 6, 13),
-    closing: +new Date(2017, 6, 16),
-    start_datetime: +new Date(2017, 6, 7),
-    end_datetime: +new Date(2017, 7, 7),
+    deadline: +new Date(2017, 8, 13),
+    closing: +new Date(2017, 8, 16),
+    start_datetime: +new Date(2017, 8, 7),
+    end_datetime: +new Date(2017, 9, 7),
     reached_datetime: +new Date(2017, 6, 6, 18),
     created_at: +new Date(2017, 6, 6),
     updated_at: +new Date(2017, 6, 6)
@@ -90,13 +90,13 @@ var datas = [
     max_number: 8,
     location: 'NTHU',
     published: true,
-    deadline: +new Date(2017, 6, 21),
-    closing: +new Date(2017, 6, 24),
-    start_datetime: +new Date(2017, 6, 31),
-    end_datetime: +new Date(2017, 7, 14),
+    deadline: +new Date(2017, 7, 21),
+    closing: +new Date(2017, 7, 24),
+    start_datetime: +new Date(2017, 7, 31),
+    end_datetime: +new Date(2017, 8, 14),
     reached_datetime: 0,
-    created_at: +new Date(2017, 6, 14),
-    updated_at: +new Date(2017, 14)
+    created_at: +new Date(2017, 7, 14),
+    updated_at: +new Date(2017, 7, 14)
   }, {
     title: '3D列印與模型建立',
     category: 'technology',
@@ -113,7 +113,7 @@ var datas = [
     min_number: 10,
     max_number: 30,
     location: '清大創新育成大樓920室',
-    published: false,
+    published: true,
     deadline: +new Date(2017, 7, 17),
     closing: +new Date(2017, 7, 20),
     start_datetime: +new Date(2017, 8, 4),
@@ -122,20 +122,23 @@ var datas = [
     created_at: +new Date(2017, 7, 10),
     updated_at: +new Date(2017, 7, 10)
   }, {
-    title: 'phase test: closed',
+    title: 'TEST: phase - closed',
     state: 'reached',
     closing: +new Date(2017, 7, 1),
     start_datetime: +new Date(2018, 12, 31)
   }, {
-    title: 'phase test: over',
+    title: 'TEST: phase - over',
     state: 'reached',
     closing: +new Date(2017, 7, 1),
     start_datetime: +new Date(2017, 7, 2)
   }, {
-    title: 'phase test: reached',
+    title: 'TEST: phase - reached',
     state: 'reached',
-    closing: +new Date(2018, 12, 31),
-    start_datetime: +new Date(2018, 12, 31)
+    closing: +new Date(2018, 11, 31),
+    start_datetime: +new Date(2018, 11, 31)
+  }, {
+    title: 'TEST: admin search - unpublished',
+    published: false
   }
 ].map(R.merge({
   title: 'none',
