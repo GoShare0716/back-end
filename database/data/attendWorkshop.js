@@ -12,7 +12,7 @@ const _datas = [
   [1, 2, false],
   [2, 3, false],
   [3, 1, true],
-  [3, 2, false]
+  [3, 2, true]
 ]
 
 const datas = _datas.map((x) => ({

@@ -13,8 +13,9 @@ module.exports = {
     view: sql('./skill/view.sql')
   },
   workshop: {
-    new: sql('./workshop/new.sql'),
     create: sql('./workshop/create.sql'),
+    get: sql('./workshop/get.sql'),
+    new: sql('./workshop/new.sql'),
     unreached: sql('./workshop/unreached.sql')
   },
   user: {

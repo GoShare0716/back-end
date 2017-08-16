@@ -35,41 +35,16 @@ router.get(baseUrl, (req, res, next) => {
   model.workshop.list(user, query)
     .then(workshops => { res.json(workshops) })
     .catch(next)
-  // function addExtraProp (userId) {
-  //   return function (workshop) {
-  //     const id = workshop.id
-  //     const x = attendeesNumber(id)
-  //     return Object.assign({}, workshop, {
-  //       friends: attendedFriends(id, userId),
-  //       attendeesNumber: x,
-  //       phase: phase(workshop, x)
-  //     })
-  //   }
-  // }
-
-  // res.json(workshopTable
-  //   .filter(workshop => workshop.published === true)
-  //   .map(addExtraProp(userId))
-  // )
 })
 
 // View
 router.get(baseUrl + '/:id', (req, res, next) => {
-  // const workshopId = +req.params.id
+  const user = utils.getUser(res)
+  const workshopId = +req.params.id
 
-  // const workshop = workshopTable[workshopId - 1]
-  // const x = attendeesNumber(workshopId, userId)
-
-  // res.json(Object.assign({},
-  //   workshop,
-  //   attendState(workshopId, userId),
-  //   {
-  //     friends: attendedFriends(workshopId, userId),
-  //     attendeesNumber: x,
-  //     phase: phase(workshop, x),
-  //     author: authorInfo(workshopId)
-  //   }
-  // ))
+  model.workshop.view(user, workshopId)
+    .then(x => { res.json(x) })
+    .catch(next)
 })
 
 // Attend

@@ -36,7 +36,7 @@ router.get(baseUrl, (req, res, next) => {
 
 // View
 router.get(baseUrl + '/:id', (req, res, next) => {
-  const skillId = req.params.id
+  const skillId = +req.params.id
   const user = utils.getUser(res)
 
   model.skill.view(user.id, skillId)
