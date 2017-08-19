@@ -49,27 +49,12 @@ router.get(baseUrl + '/:id', (req, res, next) => {
 
 // Attend
 router.post(baseUrl + '/:id', (req, res, next) => {
-  // // develop only, return value based on workshopId
-  // const workshopId = +req.params.id
-  // switch (workshopId % 3) {
-  //   case 1:
-  //     res.json({
-  //       attended: false,
-  //       canceled: false
-  //     })
-  //     break
-  //   case 2:
-  //     res.json({
-  //       attended: true,
-  //       canceled: false
-  //     })
-  //     break
-  //   default:
-  //     res.json({
-  //       attended: false,
-  //       canceled: true
-  //     })
-  // }
+  const workshopId = +req.params.id
+  const user = utils.getUser(res, {loginRequired: true})
+
+  model.workshop.attend(workshopId, user)
+    .then(x => { res.json(x) })
+    .catch(next)
 })
 
 // Attendees

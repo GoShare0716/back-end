@@ -13,9 +13,13 @@ module.exports = {
     view: sql('./skill/view.sql')
   },
   workshop: {
+    attend: sql('./workshop/attend.sql'),
+    attendInfo: sql('./workshop/attend-info.sql'),
+    cancel: sql('./workshop/cancel.sql'),
     create: sql('./workshop/create.sql'),
     get: sql('./workshop/get.sql'),
     new: sql('./workshop/new.sql'),
+    reached: sql('./workshop/reached.sql'),
     unreached: sql('./workshop/unreached.sql')
   },
   user: {
