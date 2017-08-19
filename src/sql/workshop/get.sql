@@ -1,6 +1,6 @@
 SELECT
     w.*,
-    COUNT(a.workshop_id)::integer AS attendees_number,
+    COUNT(a.user_id)::integer AS attendees_number,
     u.id            AS author_id,
     u.name          AS author_name,
     u.thumbnail_url AS author_thunmbnail_url,
@@ -9,7 +9,7 @@ SELECT
     (ma.canceled IS NOT NULL AND ma.canceled) AS canceled
 FROM workshop AS w
 LEFT JOIN attend_workshop AS a
-ON a.workshop_id = w.id
+ON a.workshop_id = w.id AND a.canceled = false
 INNER JOIN create_workshop AS c
 ON c.workshop_id = w.id
 INNER JOIN users AS u
