@@ -3,6 +3,7 @@ const moment = require('moment')
 const R = require('ramda')
 
 module.exports = function (err, req, res, next) {
+  console.error(err)
   const log = `${moment().format()} ERROR: ${err.stack}\n\n`
   fs.appendFile('logs.txt', log, (err) => {
     if (err) console.error(err)
@@ -20,9 +21,6 @@ module.exports = function (err, req, res, next) {
     statusCode,
     err.valueOf()
   ].join('\n')
-
-  console.log(msg)
-  console.log(err)
 
   // TODO: remove the msg(debug)
   res.status(status).send(msg)

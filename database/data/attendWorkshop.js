@@ -9,6 +9,7 @@ const columnSet = new pgp.helpers.ColumnSet(
 )
 
 const _datas = [
+  [1, 1, false],
   [1, 2, false],
   [2, 3, false],
   [3, 1, true],

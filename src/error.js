@@ -4,20 +4,31 @@ function errorFactory (msg, obj) {
   return err
 }
 
-const invalidUser = errorFactory(
-  'Invalid User.', {
-    status: 400,
-    description: '(fbId, accessToken) doesn\'t exist in database'
-  }
-)
-
 const memberOnly = errorFactory(
   'Need to login', {
     status: 401
   }
 )
 
+const notAvailable = errorFactory(
+  'the workshop is not available to attend.', {
+    status: 400
+  }
+)
+
+const workshopFull = errorFactory(
+  'this workshop is full.', {
+    status: 400
+  }
+)
+
+// const workshopFull = errorBuilder()
+//   .message('this workshop is full.')
+//   .status(401)
+//   .build()
+
 module.exports = {
-  invalidUser,
-  memberOnly
+  memberOnly,
+  notAvailable,
+  workshopFull
 }
