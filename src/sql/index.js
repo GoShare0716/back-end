@@ -27,8 +27,9 @@ module.exports = {
     profile: sql('./user/profile.sql'),
     voteSkills: sql('./user/vote-skills.sql'),
     equipSkills: sql('./user/equip-skills.sql'),
-    createWorkshops: sql('./user/create-workshops.sql'),
-    attendWorkshops: sql('./user/attend-workshops.sql')
+    createWorkshopsPublic: sql('./user/create-workshops-public.sql'),
+    createWorkshopsAll: sql('./user/create-workshops-all.sql'),
+    attendWorkshopsPublic: sql('./user/attend-workshops-public.sql')
   },
   functionDeclaration: sql('./function-declaration.sql')
 }

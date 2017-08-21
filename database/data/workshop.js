@@ -147,6 +147,10 @@ var datas = [
     title: 'TEST: unreached',
     state: 'judge_ac',
     deadline: PAST
+  }, {
+    title: 'TEST: public vs all',
+    state: 'judge_na',
+    published: true
   }
 ].map(R.merge({
   title: 'none',

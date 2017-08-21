@@ -8,7 +8,7 @@ module.exports = (userId) => {
     // pairs :: (PropName, Sql)[]
     const pairs = [
       ['profile', () => t.one(sql.profile, {userId})],
-      ['createWorkshops', () => t.any(sql.createWorkshopsPublic, {userId})],
+      ['createWorkshops', () => t.any(sql.createWorkshopsAll, {userId})],
       ['attendWorkshops', () => t.any(sql.attendWorkshopsPublic, {userId})]
     ]
     const props = pairs.map(R.nth(0))

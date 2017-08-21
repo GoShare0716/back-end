@@ -1,3 +1,4 @@
 module.exports = {
-  view: require('./view')
+  view: require('./view'),
+  viewSelf: require('./view-self')
 }

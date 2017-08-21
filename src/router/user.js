@@ -13,7 +13,7 @@ const baseUrl = '/users'
 router.get(baseUrl + '/me', (req, res, next) => {
   const user = utils.getUser(res, {loginRequired: true})
 
-  model.user.view(user.id)
+  model.user.viewSelf(user.id)
     .then(ret => { res.json(ret) })
     .catch(next)
 })
