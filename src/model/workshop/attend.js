@@ -32,13 +32,15 @@ module.exports = (workshopId, user) => {
       })
       .then(R.cond([
         [notAvailable, () => { throw error.notAvailable }],
-        [isFull, () => { throw error.workshopFull }],
-        [wannaAttend, () => {
-          return t.none(sql.workshop.attend, { workshopId, userId, now })
-            .then(() => {
-              return t.none(sql.workshop.reached, { workshopId, now })
-            })
-        }],
+        [wannaAttend, R.cond([
+          [isFull, () => { throw error.workshopFull }],
+          [R.T, () => {
+            return t.none(sql.workshop.attend, { workshopId, userId, now })
+              .then(() => {
+                return t.none(sql.workshop.reached, { workshopId, now })
+              })
+          }]
+        ])],
         [wannaCancel, () => {
           return t.none(sql.workshop.cancel, { workshopId, userId })
         }]

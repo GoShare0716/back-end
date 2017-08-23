@@ -15,9 +15,9 @@ module.exports = (user, workshopId) => {
         workshopId,
         userId: user.id
       })
+      .then(utils.workshop.assocPhase(now))
       .then(R.assoc('friends', [])) // TODO temp
       .then(utils.organize(['author', 'attendees']))
       .then(utils.workshop.adapter)
-      .then(utils.workshop.assocPhase(now))
   })
 }

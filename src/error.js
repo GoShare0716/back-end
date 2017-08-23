@@ -22,6 +22,12 @@ const workshopFull = errorFactory(
   }
 )
 
+const unreachable = errorFactory(
+  'this code should be unreachable', {
+    status: 500
+  }
+)
+
 // const workshopFull = errorBuilder()
 //   .message('this workshop is full.')
 //   .status(401)
