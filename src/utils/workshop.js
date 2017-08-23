@@ -2,8 +2,13 @@ const R = require('ramda')
 
 function adapter (workshop) {
   workshop.startDatetime = +workshop.startDatetime
+  workshop.endDatetime = +workshop.endDatetime
+  workshop.reachedDatetime = +workshop.reachedDatetime
   workshop.deadline = +workshop.deadline
   workshop.closing = +workshop.closing
+  workshop.createdAt = +workshop.createdAt
+  workshop.updatedAt = +workshop.updatedAt
+
   return workshop
 }
 

@@ -1,3 +1,4 @@
+const R = require('ramda')
 const moment = require('moment')
 
 const db = require('src/db')
@@ -14,7 +15,9 @@ module.exports = (user, workshopId) => {
         workshopId,
         userId: user.id
       })
-      .then(utils.organize(['author']))
+      .then(R.assoc('friends', [])) // TODO temp
+      .then(utils.organize(['author', 'attendees']))
+      .then(utils.workshop.adapter)
       .then(utils.workshop.assocPhase(now))
   })
 }
