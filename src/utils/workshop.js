@@ -1,16 +1,22 @@
 const R = require('ramda')
 
-function adapter (workshop) {
-  // TODO improve
-  workshop.startDatetime = +workshop.startDatetime
-  workshop.endDatetime = +workshop.endDatetime
-  workshop.reachedDatetime = +workshop.reachedDatetime
-  workshop.deadline = +workshop.deadline
-  workshop.closing = +workshop.closing
-  workshop.createdAt = +workshop.createdAt
-  workshop.updatedAt = +workshop.updatedAt
+const adapter = workshop => {
+  const tsFields = [
+    'startDatetime',
+    'endDatetime',
+    'reachedDatetime',
+    'deadline',
+    'closing',
+    'createdAt',
+    'updatedAt'
+  ]
 
-  return workshop
+  const toInt = x => +x
+
+  return R.apply(
+    R.pipe,
+    tsFields.map(x => R.over(R.lensProp(x), toInt))
+  )(workshop)
 }
 
 const assocPhase = R.curry((now, workshop) => {
