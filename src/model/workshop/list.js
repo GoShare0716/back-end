@@ -81,7 +81,8 @@ ORDER BY ${order}
       .then(() => {
         return t.any(listSql, R.merge(query, {stateWhitelist}))
       })
-      .map(utils.organize(['author']))
+      .map(R.assoc('friends', [])) // TODO temp
+      .map(utils.organize(['author', 'attendees']))
       .map(utils.workshop.assocPhase(now))
       .filter(overStateFilter(query.state))
   })

@@ -26,6 +26,10 @@ const PATHES = {
     [['authorId'], ['author', 'id']],
     [['authorName'], ['author', 'name']],
     [['authorThunmbnailUrl'], ['author', 'thumbnailUrl']]
+  ],
+  attendees: [
+    [['attendeesNumber'], ['attendees', 'number']],
+    [['friends'], ['attendees', 'friends']]
   ]
 }
 
