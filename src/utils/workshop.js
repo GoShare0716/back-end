@@ -1,5 +1,12 @@
 const R = require('ramda')
 
+function adapter (workshop) {
+  workshop.startDatetime = +workshop.startDatetime
+  workshop.deadline = +workshop.deadline
+  workshop.closing = +workshop.closing
+  return workshop
+}
+
 const assocPhase = R.curry((now, workshop) => {
   // TODO over phase: judge by startDatetime or endDatetime
 
@@ -33,5 +40,6 @@ const assocPhase = R.curry((now, workshop) => {
 })
 
 module.exports = {
+  adapter,
   assocPhase
 }
