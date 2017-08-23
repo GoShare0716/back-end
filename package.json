@@ -24,6 +24,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "check": "standard ./**/*.js",
     "fix": "standard --fix ./**/*.js",
-    "local-db": "node database/local-db.js"
+    "init-db": "node database/init-db.js"
   }
 }
