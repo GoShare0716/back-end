@@ -1,6 +1,7 @@
 const R = require('ramda')
 
 function adapter (workshop) {
+  // TODO improve
   workshop.startDatetime = +workshop.startDatetime
   workshop.endDatetime = +workshop.endDatetime
   workshop.reachedDatetime = +workshop.reachedDatetime
