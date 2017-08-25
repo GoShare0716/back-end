@@ -163,5 +163,3 @@ router.delete(baseUrl + '/:id', (req, res, next) => {
 //
 
 module.exports = router
-
-// vim:set et sw=2 ts=8 :

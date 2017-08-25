@@ -3,7 +3,7 @@ CREATE TABLE users (
     role             role        NOT NULL DEFAULT 'member',
     name             text        NOT NULL DEFAULT '',
     email            text        NOT NULL DEFAULT '',
-    fb_id            text        NOT NULL DEFAULT '',
+    fb_id            text UNIQUE,
     access_token     text        NOT NULL DEFAULT '',
     thumbnail_url    text        NOT NULL DEFAULT '',
     picture_url      text        NOT NULL DEFAULT '',

@@ -1,4 +1,5 @@
 require('app-module-path').addPath(__dirname)
+
 const express = require('express')
 
 const router = require('src/router')

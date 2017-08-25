@@ -22,9 +22,9 @@ const workshopFull = errorFactory(
   }
 )
 
-const unreachable = errorFactory(
-  'this code should be unreachable', {
-    status: 500
+const fbInfoRequired = errorFactory(
+  `login withour 'fbId' and 'accessToken' in request body.`, {
+    status: 400
   }
 )
 
@@ -36,5 +36,6 @@ const unreachable = errorFactory(
 module.exports = {
   memberOnly,
   notAvailable,
-  workshopFull
+  workshopFull,
+  fbInfoRequired
 }
