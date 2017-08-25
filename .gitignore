@@ -1,9 +1,9 @@
 node_modules
 logs.txt
+*.dump
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
-bash
 env.sh
