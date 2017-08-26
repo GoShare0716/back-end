@@ -4,6 +4,7 @@ const R = require('ramda')
 
 const model = require('src/model')
 const utils = require('src/utils')
+const error = require('src/error')
 
 const router = express.Router()
 router.use(bodyParser.json())
@@ -82,12 +83,46 @@ router.put(baseUrl + '/:id', (req, res, next) => {
 
 // Delete
 router.delete(baseUrl + '/:id', (req, res, next) => {
-  // res.sendStatus(200)
   const workshopId = +req.params.id
   const user = utils.getUser(res, {loginRequired: true})
 
   model.workshop.delete(workshopId, user)
     .then(() => { res.sendStatus(200) })
+    .catch(next)
+})
+
+const allowedField = ['state', 'published']
+const isAllowedFields = field => R.contains(field, allowedField)
+
+router.get(baseUrl + '/:id/:field', (req, res, next) => {
+  const workshopId = +req.params.id
+  const field = req.params.field
+
+  if (!isAllowedFields(field)) {
+    res.sendStatus(404)
+  }
+
+  model.workshop.getField(workshopId, field)
+    .then(data => { res.json(data) })
+    .catch(next)
+})
+
+router.post(baseUrl + '/:id/:field', (req, res, next) => {
+  const workshopId = +req.params.id
+  const field = req.params.field
+  const user = utils.getUser(res, {loginRequired: true})
+  const data = req.body[field]
+
+  if (!isAllowedFields(field)) {
+    res.sendStatus(404)
+  }
+
+  if (user.role !== 'admin') {
+    throw error.adminOnly
+  }
+
+  model.workshop.setField(workshopId, field, data)
+    .then(data => { res.json(data) })
     .catch(next)
 })
 

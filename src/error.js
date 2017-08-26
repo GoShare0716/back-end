@@ -16,6 +16,12 @@ const notAuthor = errorFactory(
   }
 )
 
+const adminOnly = errorFactory(
+  'Only admin allowed to do this operation.', {
+    status: 401
+  }
+)
+
 const notAvailable = errorFactory(
   'the workshop is not available to attend.', {
     status: 400
@@ -43,6 +49,7 @@ module.exports = {
   fbInfoRequired,
   memberOnly,
   notAuthor,
+  adminOnly,
   notAvailable,
   workshopFull
 }
