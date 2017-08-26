@@ -8,8 +8,8 @@ function sql (file) {
 
 module.exports = {
   skill: {
-    new: sql('./skill/new.sql'),
     create: sql('./skill/create.sql'),
+    new: sql('./skill/new.sql'),
     view: sql('./skill/view.sql')
   },
   workshop: {
@@ -26,15 +26,15 @@ module.exports = {
     updateWhenJudging: sql('./workshop/update-when-judging.sql')
   },
   user: {
-    userLoginInfo: sql('./user/user-login-info.sql'),
-    profile: sql('./user/profile.sql'),
-    voteSkills: sql('./user/vote-skills.sql'),
+    attendWorkshopsPublic: sql('./user/attend-workshops-public.sql'),
+    createWorkshopsAll: sql('./user/create-workshops-all.sql'),
+    createWorkshopsPublic: sql('./user/create-workshops-public.sql'),
     equipSkills: sql('./user/equip-skills.sql'),
     new: sql('./user/new.sql'),
+    profile: sql('./user/profile.sql'),
     update: sql('./user/update.sql'),
-    createWorkshopsPublic: sql('./user/create-workshops-public.sql'),
-    createWorkshopsAll: sql('./user/create-workshops-all.sql'),
-    attendWorkshopsPublic: sql('./user/attend-workshops-public.sql')
+    userLoginInfo: sql('./user/user-login-info.sql'),
+    voteSkills: sql('./user/vote-skills.sql')
   },
   functionDeclaration: sql('./function-declaration.sql')
 }
