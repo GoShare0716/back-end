@@ -15,6 +15,7 @@ VALUES (
     ${pictureUrl}
 )
 RETURNING
+    id,
     fb_id,
     access_token,
     role;

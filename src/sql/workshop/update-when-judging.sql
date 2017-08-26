@@ -21,6 +21,7 @@ SET
 WHERE
     id = ${workshopId}
 RETURNING
+    id,
     title,
     category,
     requirement,
