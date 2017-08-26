@@ -8,7 +8,6 @@ SET
 WHERE
     fb_id = ${fbId}
 RETURNING
-    id,
     fb_id,
     access_token,
     role;

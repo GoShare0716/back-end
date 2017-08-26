@@ -26,9 +26,9 @@ module.exports = (user, query) => {
   const isAdminSearch = (user.role === 'admin') && (query.state === 'admin')
 
   const order = R.cond([
-    [R.equals('hot'), R.always('attendees_number DESC')],
-    [R.equals('date'), R.always('start_datetime DESC')],
-    [R.T, R.always('created_at DESC')] // new
+    [R.equals('hot'), R.always('w.attendees_number DESC')],
+    [R.equals('date'), R.always('w.start_datetime DESC')],
+    [R.T, R.always('w.created_at DESC')] // new
   ])(query.ordering)
   const stateWhitelist = R.cond([
     [R.equals('investigating'), R.always(['judge_ac'])],
@@ -39,14 +39,14 @@ module.exports = (user, query) => {
 
   const conditions = []
   if (query.searchText !== '') {
-    conditions.push(`title ILIKE '%$(searchText:value)%'`)
+    conditions.push(`w.title ILIKE '%$(searchText:value)%'`)
   }
   if (query.category !== 'all') {
-    conditions.push('category = $(category)')
+    conditions.push('w.category = $(category)')
   }
   if (!isAdminSearch) {
-    conditions.push('published = true')
-    conditions.push(`state IN ($(stateWhitelist:csv))`)
+    conditions.push('w.published = true')
+    conditions.push(`w.state IN ($(stateWhitelist:csv))`)
   }
 
   const listSql = `
