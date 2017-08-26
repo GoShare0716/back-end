@@ -20,7 +20,10 @@ module.exports = {
     get: sql('./workshop/get.sql'),
     new: sql('./workshop/new.sql'),
     reached: sql('./workshop/reached.sql'),
-    unreached: sql('./workshop/unreached.sql')
+    unreached: sql('./workshop/unreached.sql'),
+    updateAll: sql('./workshop/update-all.sql'),
+    updateByAuthor: sql('./workshop/update-by-author.sql'),
+    updateWhenJudging: sql('./workshop/update-when-judging.sql')
   },
   user: {
     userLoginInfo: sql('./user/user-login-info.sql'),

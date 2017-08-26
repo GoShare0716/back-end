@@ -1,6 +1,7 @@
 module.exports = {
+  attend: require('./attend'),
   create: require('./create'),
   list: require('./list'),
-  attend: require('./attend'),
+  update: require('./update'),
   view: require('./view')
 }

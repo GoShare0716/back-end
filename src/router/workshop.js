@@ -10,6 +10,8 @@ router.use(bodyParser.json())
 
 const baseUrl = '/workshops'
 
+// TODO order all model's params: workshopId, user, query, body
+
 // Create
 router.post(baseUrl, (req, res, next) => {
   const user = utils.getUser(res, {loginRequired: true})
@@ -69,14 +71,12 @@ router.get(baseUrl + '/:id/attendees', (req, res, next) => {
 
 // Update
 router.put(baseUrl + '/:id', (req, res, next) => {
-  // const workshopId = +req.params.id
-  // const workshop = workshopTable[workshopId - 1]
-  // res.json(Object.assign({},
-  //   workshop,
-  //   {
-  //     updatedAt: Date.now()
-  //   }
-  // ))
+  const workshopId = +req.params.id
+  const user = utils.getUser(res, {loginRequired: true})
+
+  model.workshop.update(workshopId, user, req.body)
+    .then(x => { res.json(x) })
+    .catch(next)
 })
 
 // Delete
