@@ -26,7 +26,7 @@ module.exports = (user, query) => {
   const isAdminSearch = (user.role === 'admin') && (query.state === 'admin')
 
   const order = R.cond([
-    [R.equals('hot'), R.always('w.attendees_number DESC')],
+    [R.equals('hot'), R.always('attendees_number DESC')],
     [R.equals('date'), R.always('w.start_datetime DESC')],
     [R.T, R.always('w.created_at DESC')] // new
   ])(query.ordering)
