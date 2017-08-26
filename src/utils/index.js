@@ -1,7 +1,8 @@
 module.exports = {
   auth: require('./auth'),
-  sql: require('./sql'),
   getUser: require('./get-user'),
   organize: require('./organize'),
+  sql: require('./sql'),
+  user: require('./user'),
   workshop: require('./workshop')
 }

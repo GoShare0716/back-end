@@ -15,6 +15,7 @@ module.exports = {
   workshop: {
     attend: sql('./workshop/attend.sql'),
     attendInfo: sql('./workshop/attend-info.sql'),
+    attendees: sql('./workshop/attendees.sql'),
     cancel: sql('./workshop/cancel.sql'),
     create: sql('./workshop/create.sql'),
     get: sql('./workshop/get.sql'),

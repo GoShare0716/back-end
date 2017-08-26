@@ -40,6 +40,7 @@ var datas = [
   }, {
     name: '賴詰凱',
     role: 'admin',
+    // role: 'member',
     email: 'skyle0115@gmail.com',
     fb_id: '1833867746937550',
     thumbnail_url: 'https://scontent-tpe1-1.xx.fbcdn.net/v/t1.0-1/c0.31.80.80/p80x80/18622427_1859238271067164_3869120362467491071_n.jpg?oh=2c4879f3c50e4ed99de714439435ce08&oe=59F71BC3',

@@ -61,12 +61,13 @@ router.post(baseUrl + '/:id', (req, res, next) => {
 
 // Attendees
 router.get(baseUrl + '/:id/attendees', (req, res, next) => {
-  // const workshopId = +req.params.id
-  // res.json(attendWorkshopTable
-  //   .filter(attend => attend.workshopId === workshopId)
-  //   .map(attend => attend.userId)
-  //   .map(userId => userTable[userId - 1])
-  // )
+  const workshopId = +req.params.id
+  const user = utils.getUser(res, {loginRequired: true})
+
+  model.workshop.attendees(workshopId, user)
+    .map(utils.user.adapter)
+    .then(attendees => { res.json(attendees) })
+    .catch(next)
 })
 
 // Update
