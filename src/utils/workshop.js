@@ -20,8 +20,6 @@ const adapter = workshop => {
 }
 
 const assocPhase = R.curry((now, workshop) => {
-  // TODO over phase: judge by startDatetime or endDatetime
-
   const stateEqual = value => R.pipe(
     R.prop('state'),
     R.equals(value)

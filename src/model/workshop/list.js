@@ -3,6 +3,7 @@ const R = require('ramda')
 const db = require('src/db')
 const sql = require('src/sql')
 const utils = require('src/utils')
+const error = require('src/error')
 
 const overStateFilter = R.curry((queryState, workshop) => {
   if (queryState === 'reached') {
@@ -16,6 +17,10 @@ const overStateFilter = R.curry((queryState, workshop) => {
 
 module.exports = (user, query) => {
   // TODO pagination, friends, query-state
+
+  if (query.state === 'admin' && user.role !== 'admin') {
+    throw error.adminOnly
+  }
 
   const now = Date.now()
   const isAdminSearch = (user.role === 'admin') && (query.state === 'admin')
