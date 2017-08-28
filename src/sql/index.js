@@ -32,6 +32,7 @@ module.exports = {
     createWorkshopsAll: sql('./user/create-workshops-all.sql'),
     createWorkshopsPublic: sql('./user/create-workshops-public.sql'),
     equipSkills: sql('./user/equip-skills.sql'),
+    exist: sql('./user/exist.sql'),
     new: sql('./user/new.sql'),
     profile: sql('./user/profile.sql'),
     update: sql('./user/update.sql'),

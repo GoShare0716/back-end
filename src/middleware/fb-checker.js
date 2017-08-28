@@ -1,6 +1,6 @@
 const FB = require('fb')
 
-FB.options({'appSecret': `${process.env.FB_APP_STAGE_SECRET}`})
+FB.options({'appSecret': `${process.env.FB_APP_SECRET_KEY}`})
 
 const err = new Error('Invalid fb user. (fb-checker)')
 err.status = 401
