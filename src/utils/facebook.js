@@ -7,10 +7,9 @@ const log = x => {
 }
 
 function friends (user) {
+  // TODO handle pagination
   return FB.api('/me/friends', { access_token: user.accessToken })
-    .then(log)
     .then(res => res.data.map(R.prop('id')))
-    .then(log)
 }
 
 module.exports = {

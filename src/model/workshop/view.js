@@ -1,4 +1,3 @@
-const R = require('ramda')
 const moment = require('moment')
 
 const db = require('src/db')
@@ -8,16 +7,15 @@ const utils = require('src/utils')
 module.exports = (user, workshopId) => {
   // TODO friends
   const now = moment().valueOf()
+  const userId = user.id
 
   return db.task(t => {
-    return t.one(sql.workshop.get,
-      {
-        workshopId,
-        userId: user.id
+    return utils.facebook.friends(user)
+      .then(friends => {
+        return t.one(sql.workshop.get, { workshopId, userId, friends })
+          .then(utils.workshop.assocPhase(now))
+          .then(utils.organize(['author', 'attendees']))
+          .then(utils.workshop.adapter)
       })
-      .then(utils.workshop.assocPhase(now))
-      .then(R.assoc('friends', [])) // TODO temp
-      .then(utils.organize(['author', 'attendees']))
-      .then(utils.workshop.adapter)
   })
 }
