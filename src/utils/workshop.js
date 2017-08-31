@@ -11,10 +11,13 @@ const adapter = workshop => {
     'updatedAt'
   ]
 
-  const toInt = x => +x
+  // ignore if the field is null (not exist)
+  const toInt = R.when(
+    R.complement(R.isNil),
+    x => +x
+  )
 
-  return R.apply(
-    R.pipe,
+  return R.apply(R.pipe,
     tsFields.map(x => R.over(R.lensProp(x), toInt))
   )(workshop)
 }
