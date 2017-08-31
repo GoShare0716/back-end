@@ -1,12 +1,13 @@
 const db = require('src/db')
+const { snakeCase } = require('change-case')
 
 module.exports = (workshopId, field, data) => {
-  // TODO field name might be camel case
+  const dbField = snakeCase(field)
   const setFieldSql = `
 UPDATE workshop
-SET ${field} = $(data)
+SET ${dbField} = $(data)
 WHERE id = $(workshopId)
-RETURNING ${field};
+RETURNING ${dbField};
   `
 
   return db.one(setFieldSql, { workshopId, data })

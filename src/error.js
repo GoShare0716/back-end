@@ -10,8 +10,15 @@ const memberOnly = errorFactory(
   }
 )
 
+// TODO change to authorOnly
 const notAuthor = errorFactory(
   'Not allowed to do this unless you are author of this workshop.', {
+    status: 401
+  }
+)
+
+const selfOnly = errorFactory(
+  'Not allowed to do this unless you are this user.', {
     status: 401
   }
 )
@@ -53,6 +60,7 @@ const fbInfoRequired = errorFactory(
 
 module.exports = {
   adminOnly,
+  selfOnly,
   fbInfoRequired,
   invalidFbUser,
   memberOnly,

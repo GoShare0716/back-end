@@ -1,8 +1,10 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const R = require('ramda')
 
 const model = require('src/model')
 const utils = require('src/utils')
+const error = require('src/error')
 
 const router = express.Router()
 router.use(bodyParser.json())
@@ -28,27 +30,38 @@ router.get(baseUrl + '/:id', (req, res, next) => {
     .catch(next)
 })
 
-// Update
-// genUpdateApi('email')
-// genUpdateApi('introduction')
-// genUpdateApi('fbUrl')
-// genUpdateApi('personalWebUrl')
-// genUpdateApi('available')
+// TODO rename to inAllowedFields
 
-// util
+// update certain field
+router.put(baseUrl + '/:id/:field', (req, res, next) => {
+  // TODO userId and user ambigious
+  // TODO handle authority problem by one general function, like guest, author, self, adamin
+  const allowedField = [
+    'email',
+    'introduction',
+    'fbUrl',
+    'personalWebUrl',
+    'available'
+  ]
 
-// function genUpdateApi (field) {
-//   router.put(`${baseUrl}/:id/${field}`, (req, res, next) => {
-//     const data = req.body[field]
-//     if (data === undefined) {
-//       const err = new Error(`Data not found.(User Update ${field})`)
-//       err.status = 400
-//       throw err
-//     }
-//     let obj = {}
-//     obj[field] = data
-//     res.json(obj)
-//   })
-// }
+  const userId = +req.params.id
+  const field = req.params.field
+  const user = utils.getUser(res, {loginRequired: true})
+  const data = req.body[field]
+
+  if (!R.contains(field, allowedField)) {
+    res.sendStatus(404)
+  }
+
+  if (user.role !== 'admin') {
+    if (user.role !== userId) {
+      throw error.selfOnly
+    }
+  }
+
+  model.user.setField(userId, field, data)
+    .then(data => { res.json(data) })
+    .catch(next)
+})
 
 module.exports = router

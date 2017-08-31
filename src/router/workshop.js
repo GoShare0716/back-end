@@ -107,7 +107,7 @@ router.get(baseUrl + '/:id/:field', (req, res, next) => {
     .catch(next)
 })
 
-router.post(baseUrl + '/:id/:field', (req, res, next) => {
+router.put(baseUrl + '/:id/:field', (req, res, next) => {
   const workshopId = +req.params.id
   const field = req.params.field
   const user = utils.getUser(res, {loginRequired: true})
