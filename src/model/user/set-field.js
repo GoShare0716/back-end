@@ -2,7 +2,6 @@ const db = require('src/db')
 const {snakeCase} = require('change-case')
 
 module.exports = (userId, field, data) => {
-  // TODO field name might be camel case
   const dbField = snakeCase(field)
   const setFieldSql = `
 UPDATE users

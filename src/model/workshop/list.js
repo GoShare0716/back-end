@@ -15,7 +15,7 @@ const overStateFilter = R.curry((queryState, workshop) => {
   }
 })
 
-// TODO pagination, friends
+// TODO pagination
 module.exports = (user, query) => {
   if (query.state === 'admin' && user.role !== 'admin') {
     throw error.adminOnly

@@ -30,9 +30,7 @@ router.get(baseUrl + '/:id', (req, res, next) => {
     .catch(next)
 })
 
-// TODO rename to inAllowedFields
-
-// update certain field
+// Update certain field
 router.put(baseUrl + '/:id/:field', (req, res, next) => {
   // TODO userId and user ambigious
   // TODO handle authority problem by one general function, like guest, author, self, adamin

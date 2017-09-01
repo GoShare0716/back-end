@@ -5,7 +5,6 @@ const sql = require('src/sql')
 const utils = require('src/utils')
 
 module.exports = (user, workshopId) => {
-  // TODO friends
   const now = moment().valueOf()
   const userId = user.id
 
