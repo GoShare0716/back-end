@@ -51,10 +51,8 @@ router.put(baseUrl + '/:id/:field', (req, res, next) => {
     res.sendStatus(404)
   }
 
-  if (user.role !== 'admin') {
-    if (user.role !== userId) {
-      throw error.selfOnly
-    }
+  if (user.role !== 'admin' && (+user.id) !== userId) {
+    throw error.selfOnly
   }
 
   model.user.setField(userId, field, data)

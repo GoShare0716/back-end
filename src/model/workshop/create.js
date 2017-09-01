@@ -9,5 +9,6 @@ module.exports = (user, body) => db.tx(t => {
   return t.one(sql.workshop.new, body)
     .then(R.prop('id'))
     .then(workshopId => t.one(sql.workshop.create, { workshopId, userId }))
+    .then(R.prop('workshopId'))
     .then(R.objOf('id'))
 })

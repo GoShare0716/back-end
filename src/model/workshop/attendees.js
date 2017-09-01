@@ -3,7 +3,9 @@ const error = require('src/error')
 const sql = require('src/sql')
 
 module.exports = (workshopId, user) => db.task(t => {
-  return t.one(sql.workshop.get, { workshopId, userId: user.id })
+  const userId = user.id
+  const friends = ['-1']
+  return t.one(sql.workshop.get, { workshopId, userId, friends })
     .then(workshop => {
       if (user.role !== 'admin' && !workshop.isAuthor) {
         throw error.authorOnly

@@ -25,10 +25,13 @@ module.exports = (workshopId, user) => {
     [true, false]
   )
 
+  // empty friends, dont need this info
+  const friends = ['-1']
+
   return db.tx(t => {
     return t.none(sql.workshop.unreached, {now})
       .then(() => {
-        return t.one(sql.workshop.get, { workshopId, userId })
+        return t.one(sql.workshop.get, { workshopId, userId, friends })
       })
       .then(R.cond([
         [notAvailable, () => { throw error.notAvailable }],
