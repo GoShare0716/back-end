@@ -4,7 +4,7 @@ const db = require('src/db')
 const sql = require('src/sql')
 const utils = require('src/utils')
 
-module.exports = (user, workshopId) => {
+module.exports = (workshopId, user) => {
   const now = moment().valueOf()
   const userId = user.id
 

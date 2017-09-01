@@ -1,12 +1,13 @@
+const R = require('ramda')
+
 const db = require('src/db')
 const sql = require('src/sql')
 
-module.exports = (userId, body) => db.tx(t => {
+module.exports = (user, body) => db.tx(t => {
+  const userId = user.id
+
   return t.one(sql.workshop.new, body)
-    .then(({ id: workshopId }) => {
-      return t.one(sql.workshop.create, {workshopId, userId})
-    })
-    .then(({workshopId}) => {
-      return { id: workshopId }
-    })
+    .then(R.prop('id'))
+    .then(workshopId => t.one(sql.workshop.create, { workshopId, userId }))
+    .then(R.objOf('id'))
 })

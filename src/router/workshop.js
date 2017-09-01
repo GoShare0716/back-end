@@ -11,13 +11,11 @@ router.use(bodyParser.json())
 
 const baseUrl = '/workshops'
 
-// TODO order all model's params: workshopId, user, query, body
-
 // Create
 router.post(baseUrl, (req, res, next) => {
   const user = utils.getUser(res, {loginRequired: true})
 
-  model.workshop.create(user.id, req.body)
+  model.workshop.create(user, req.body)
     .then(id => { res.json(id) })
     .catch(next)
 })
@@ -45,7 +43,7 @@ router.get(baseUrl + '/:id', (req, res, next) => {
   const user = utils.getUser(res)
   const workshopId = +req.params.id
 
-  model.workshop.view(user, workshopId)
+  model.workshop.view(workshopId, user)
     .then(x => { res.json(x) })
     .catch(next)
 })
