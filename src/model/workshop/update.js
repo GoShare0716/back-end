@@ -16,7 +16,7 @@ module.exports = (workshopId, user, body) => db.task(t => {
   } else {
     return t.one(sql.workshop.get, { workshopId, userId: user.id })
       .then(workshop => {
-        if (!workshop.isAuthor) { throw error.notAuthor }
+        if (!workshop.isAuthor) { throw error.authorOnly }
         return R.cond([
           [judging, () => t.one(sql.workshop.updateWhenJudging, updateData)],
           [R.T, () => t.one(sql.workshop.updateByAuthor, updateData)]

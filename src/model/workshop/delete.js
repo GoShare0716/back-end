@@ -10,7 +10,7 @@ module.exports = (workshopId, user) => {
     return t.one(sql.workshop.get, { workshopId, userId })
       .then(workshop => {
         if (user.role !== 'admin' && !workshop.isAuthor) {
-          throw error.notAuthor
+          throw error.authorOnly
         }
         return t.none(sql.workshop.delete, { workshopId })
       })
