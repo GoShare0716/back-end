@@ -1,5 +1,7 @@
 SELECT
-    u.*
+    u.*,
+    (a.canceled IS NOT NULL AND NOT a.canceled) AS attended,
+    (a.canceled IS NOT NULL AND a.canceled) AS canceled
 FROM
     attend_workshop AS a
 INNER JOIN users AS u

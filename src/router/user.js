@@ -51,7 +51,7 @@ router.put(baseUrl + '/:id/:field', (req, res, next) => {
     res.sendStatus(404)
   }
 
-  if (user.role !== 'admin' && (+user.id) !== userId) {
+  if (user.role !== 'admin' && user.id !== userId) {
     throw error.selfOnly
   }
 
