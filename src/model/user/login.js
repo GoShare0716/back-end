@@ -22,14 +22,16 @@ FB.options({'appSecret': `${process.env.FB_APP_SECRET_KEY}`})
 
 module.exports = body => db.task(t => {
   const { fbId, accessToken } = body
-  const longLived = utils.auth.fbLongLivedToken(accessToken)
+  const longLived = utils.facebook.longLivedToken(accessToken)
   const valid = FB.api('/me', { access_token: accessToken })
     .then(R.prop('id'))
     .then(R.equals(fbId))
 
   return Promise.all([valid, longLived]).spread((valid, longLived) => {
     if (!valid) { throw error.invalidFbUser }
+
     const data = R.assoc('accessToken', longLived, body)
+
     return t.oneOrNone(sql.user.exist, body).then(R.cond([
       [R.isNil, () => t.one(sql.user.new, data)],
       [R.T, () => t.one(sql.user.update, data)]
