@@ -29,7 +29,7 @@ ON a.workshop_id = w.id AND a.canceled = false
 
 -- user's friends
 LEFT JOIN users AS f
-ON a.user_id = f.id AND f.fb_id IN ($(friends:csv))
+ON a.user_id = f.id AND f.fb_id IN (${friends:csv})
 
 -- author
 INNER JOIN create_workshop AS c
