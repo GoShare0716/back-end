@@ -3,7 +3,7 @@ const path = require('path')
 
 function sql (file) {
   const fullPath = path.join(__dirname, file)
-  return new QueryFile(fullPath, {minify: true})
+  return new QueryFile(fullPath)
 }
 
 module.exports = {
