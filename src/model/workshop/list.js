@@ -22,6 +22,7 @@ module.exports = (user, query) => {
   }
 
   const now = Date.now()
+  const userId = user.id
   const isAdminSearch = (user.role === 'admin') && (query.state === 'admin')
 
   const order = R.cond([
@@ -68,6 +69,7 @@ SELECT
   u.fb_url           AS author_fb_url,
   u.personal_web_url AS author_personal_web_url,
   u.introduction     AS author_introduction,
+  (u.id = $(userId)) AS is_author,
   COUNT(a.user_id)::integer AS attendees_number,
   ARRAY_AGG(f.id)            AS friends_id,
   ARRAY_AGG(f.name)          AS friends_name,
@@ -96,10 +98,10 @@ ORDER BY ${order}
 ;`
 
   return db.task(t => {
-    return t.none(sql.workshop.unreached, {now})
+    return t.none(sql.workshop.unreached, { now })
       .then(() => {
         return utils.facebook.friends(user).then(friends => {
-          return t.any(listSql, R.merge(query, { stateWhitelist, friends }))
+          return t.any(listSql, R.merge(query, { userId, stateWhitelist, friends }))
         })
       })
       .map(utils.workshop.assocPhase(now))

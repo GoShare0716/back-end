@@ -52,7 +52,14 @@ const assocPhase = R.curry((now, workshop) => {
   )(workshop)
 })
 
+const isAuthor = R.prop('isAuthor')
+const isPublic = R.prop('published')
+const isPrivate = R.complement(isPublic)
+
 module.exports = {
   adapter,
-  assocPhase
+  assocPhase,
+  isAuthor,
+  isPublic,
+  isPrivate
 }

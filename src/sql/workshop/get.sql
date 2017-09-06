@@ -6,11 +6,11 @@ SELECT
     u.fb_url           AS author_fb_url,
     u.personal_web_url AS author_personal_web_url,
     u.introduction     AS author_introduction,
+    (u.id = ${userId}) AS is_author,
     COUNT(a.user_id)::integer AS attendees_number,
     ARRAY_AGG(f.id)            AS friends_id,
     ARRAY_AGG(f.name)          AS friends_name,
     ARRAY_AGG(f.thumbnail_url) AS friends_thumbnail_url,
-    (u.id = ${userId}) AS is_author,
     (ma.canceled IS NOT NULL AND NOT ma.canceled) AS attended,
     (ma.canceled IS NOT NULL AND ma.canceled) AS canceled
 FROM workshop AS w
