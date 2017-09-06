@@ -1,3 +1,4 @@
+-- workshop.new
 INSERT INTO workshop (
     title,
     category,

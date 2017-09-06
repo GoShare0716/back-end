@@ -1,3 +1,4 @@
+-- user.attend-workshops-public
 SELECT
   w.id,
   w.state,

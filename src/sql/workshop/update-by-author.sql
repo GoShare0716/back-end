@@ -1,3 +1,4 @@
+-- workshop.update-by-author
 UPDATE workshop
 SET
     title = ${title},

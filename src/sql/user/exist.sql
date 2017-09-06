@@ -1,3 +1,4 @@
+-- user.exist
 SELECT
     id
 FROM users

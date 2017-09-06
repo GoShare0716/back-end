@@ -1,3 +1,4 @@
+-- workshop.cancel
 UPDATE attend_workshop
 SET
     canceled = true

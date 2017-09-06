@@ -1,3 +1,4 @@
+-- user.is-author
 SELECT
     (u.id = ${userId}) AS is_author
 FROM create_workshop AS c

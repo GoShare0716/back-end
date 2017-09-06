@@ -1,3 +1,4 @@
+-- workshop.get
 SELECT
     w.*,
     u.id               AS author_id,

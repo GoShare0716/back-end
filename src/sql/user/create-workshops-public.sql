@@ -1,3 +1,4 @@
+-- user.craete-workshops-public
 SELECT
   w.id,
   w.state,

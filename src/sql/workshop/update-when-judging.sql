@@ -1,3 +1,4 @@
+-- workshop.update-when-judging
 UPDATE workshop
 SET
     title = ${title},

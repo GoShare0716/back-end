@@ -1,3 +1,4 @@
+-- user.update
 UPDATE users
 SET
     access_token = ${accessToken},

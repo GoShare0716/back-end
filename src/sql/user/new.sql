@@ -1,3 +1,4 @@
+-- user.new
 INSERT INTO users (
     fb_id,
     access_token,

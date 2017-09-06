@@ -1,3 +1,4 @@
+-- user.vote-skills
 SELECT *
 FROM vote_skill
 INNER JOIN skill

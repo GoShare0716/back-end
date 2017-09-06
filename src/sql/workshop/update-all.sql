@@ -1,3 +1,4 @@
+-- workshop.update-all
 UPDATE workshop
 SET
     title = ${title},

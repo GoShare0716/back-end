@@ -1,3 +1,4 @@
+-- workshop.attendees
 SELECT
     u.*,
     (a.canceled IS NOT NULL AND NOT a.canceled) AS attended,

@@ -1,3 +1,4 @@
+-- user.create-workshops-all
 SELECT
   w.id,
   w.state,
