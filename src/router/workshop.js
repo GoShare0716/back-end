@@ -92,6 +92,7 @@ router.delete(baseUrl + '/:id', (req, res, next) => {
 const allowedField = ['state', 'published']
 const isAllowedFields = field => R.contains(field, allowedField)
 
+// get field
 router.get(baseUrl + '/:id/:field', (req, res, next) => {
   const workshopId = +req.params.id
   const field = req.params.field
@@ -105,6 +106,7 @@ router.get(baseUrl + '/:id/:field', (req, res, next) => {
     .catch(next)
 })
 
+// set field
 router.put(baseUrl + '/:id/:field', (req, res, next) => {
   const workshopId = +req.params.id
   const field = req.params.field
@@ -115,11 +117,7 @@ router.put(baseUrl + '/:id/:field', (req, res, next) => {
     res.sendStatus(404)
   }
 
-  if (user.role !== 'admin') {
-    throw error.adminOnly
-  }
-
-  model.workshop.setField(workshopId, field, data)
+  model.workshop.setField(workshopId, user, field, data)
     .then(data => { res.json(data) })
     .catch(next)
 })

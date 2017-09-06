@@ -20,6 +20,7 @@ module.exports = {
     create: sql('./workshop/create.sql'),
     delete: sql('./workshop/delete.sql'),
     get: sql('./workshop/get.sql'),
+    isAuthor: sql('./workshop/is-author.sql'),
     new: sql('./workshop/new.sql'),
     reached: sql('./workshop/reached.sql'),
     unreached: sql('./workshop/unreached.sql'),
