@@ -32,9 +32,12 @@ module.exports = body => db.task(t => {
 
     const data = R.assoc('accessToken', longLived, body)
 
-    return t.oneOrNone(sql.user.exist, body).then(R.cond([
-      [R.isNil, () => t.one(sql.user.new, data)],
-      [R.T, () => t.one(sql.user.update, data)]
-    ]))
+    // TODO: only update empty field, tempararily didn't change anything
+    return t.oneOrNone(sql.user.exist, body)
+      .then(R.cond([
+        [R.isNil, () => t.one(sql.user.new, data)],
+        // [R.T, () => t.one(sql.user.update, data)]
+        [R.T, R.identity]
+      ]))
   })
 })
