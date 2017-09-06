@@ -4,6 +4,11 @@ const initOptions = {
   receive: (data, result, e) => {
     camelizeColumns(data)
   },
+  query: e => {
+    console.log('=== QUERY ===')
+    console.log(e.query)
+    console.log('^^^ QUERY ^^^')
+  },
   error: (error, e) => {
     if (e.query) {
       console.log('QUERY: ', e.query)
