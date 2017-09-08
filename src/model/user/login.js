@@ -10,14 +10,18 @@ const error = require('src/error')
 FB.options({'appSecret': `${process.env.FB_APP_SECRET_KEY}`})
 
 /*
- * 1. check user exists (fb_id)
- * 2. transform access token to long lived one
- * 3. user not exists
- *    - new
- * 4. user exists
- *    - judge the (fbId, accessToken) pair by fb api
- *    - correct, update the the accessToken to long lived
- *    - return the (fbId, accessToken), which accessToken is updated
+ * 1. get long lived access token and check whether is it valid
+ * 2. check user exists
+ *    - if user not exists
+ *      + new
+ *    - else
+ *      + if not valid, throw error
+ *      + else, update access token in database into long lived one
+ * 3. return
+ *    - id
+ *    - fb_id
+ *    - access_token
+ *    - role
  */
 
 module.exports = body => db.task(t => {
@@ -30,14 +34,14 @@ module.exports = body => db.task(t => {
   return Promise.all([valid, longLived]).spread((valid, longLived) => {
     if (!valid) { throw error.invalidFbUser }
 
+    // replace access token into long lived one
     const data = R.assoc('accessToken', longLived, body)
 
-    // TODO: only update empty field, tempararily didn't change anything
     return t.oneOrNone(sql.user.exist, body)
       .then(R.cond([
         [R.isNil, () => t.one(sql.user.new, data)],
-        // [R.T, () => t.one(sql.user.update, data)]
-        [R.T, R.identity]
+        // TODO: only update empty field, tempararily only update to long lived
+        [R.T, () => t.one(sql.user.update, data)]
       ]))
   })
 })
