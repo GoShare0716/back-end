@@ -4,7 +4,6 @@ const R = require('ramda')
 
 const model = require('src/model')
 const utils = require('src/utils')
-const error = require('src/error')
 
 const router = express.Router()
 router.use(bodyParser.json())
@@ -90,14 +89,12 @@ router.delete(baseUrl + '/:id', (req, res, next) => {
 })
 
 const allowedField = ['state', 'published']
-const isAllowedFields = field => R.contains(field, allowedField)
-
 // get field
 router.get(baseUrl + '/:id/:field', (req, res, next) => {
   const workshopId = +req.params.id
   const field = req.params.field
 
-  if (!isAllowedFields(field)) {
+  if (!R.contains(field, allowedField)) {
     res.sendStatus(404)
   }
 
@@ -113,7 +110,7 @@ router.put(baseUrl + '/:id/:field', (req, res, next) => {
   const user = utils.getUser(res, {loginRequired: true})
   const data = req.body[field]
 
-  if (!isAllowedFields(field)) {
+  if (!R.contains(field, allowedField)) {
     res.sendStatus(404)
   }
 

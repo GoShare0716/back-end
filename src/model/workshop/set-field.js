@@ -6,6 +6,9 @@ const error = require('src/error')
 const sql = require('src/sql')
 const utils = require('src/utils')
 
+const adminOnlyFields = ['state']
+// const authorOnlyFields = ['published']
+
 module.exports = (workshopId, user, field, data) => {
   const dbField = snakeCase(field)
   const setFieldSql = `
@@ -18,6 +21,8 @@ RETURNING ${dbField};
   // only admin and author can set field
   if (utils.user.isAdmin(user)) {
     return db.one(setFieldSql, { workshopId, data })
+  } else if (R.contains(field, adminOnlyFields)) {
+    return Promise.reject(error.adminOnly)
   } else {
     return db.task(t => {
       const userId = user.id
