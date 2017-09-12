@@ -10,7 +10,8 @@ router.use(bodyParser.json())
 
 // Login
 router.post(`/login/facebook`, (req, res, next) => {
-  if (R.any(R.isNil, R.props(['fbId', 'accessToken'], req.body))) {
+  const requiredFields = ['fbId', 'accessToken']
+  if (R.any(R.isNil, R.props(requiredFields, req.body))) {
     throw error.fbInfoRequired
   }
 
