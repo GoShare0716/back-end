@@ -8,4 +8,5 @@ FROM
 INNER JOIN users AS u
 ON u.id = a.user_id
 WHERE
-    a.workshop_id = ${workshopId};
+    a.workshop_id = ${workshopId}
+ORDER BY a.created_at DESC;

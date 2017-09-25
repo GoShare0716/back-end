@@ -21,8 +21,7 @@ router.post(`/login/facebook`, (req, res, next) => {
 })
 
 // Logout
-router.post('/logout', (req, res, next) => {
-
-})
+// router.post('/logout', (req, res, next) => {
+// })
 
 module.exports = router
