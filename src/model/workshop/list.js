@@ -62,6 +62,7 @@ SELECT
   w.start_datetime,
   w.pre_price,
   w.price,
+  w.location,
   w.published, --- filter usage, not for api
   u.id               AS author_id,
   u.name             AS author_name,
