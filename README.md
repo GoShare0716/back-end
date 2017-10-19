@@ -1,6 +1,6 @@
 GoShare's Backend
 ===
 
-Underveloped.
+Underdeveloped.
 
 Please don't use it!!
