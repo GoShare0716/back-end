@@ -15,11 +15,11 @@ const columnSet = new pgp.helpers.ColumnSet(
     'introduction',
     {
       name: 'available',
-      def: genAvai()
+      def: genAvai
     },
     {
       name: 'created_at',
-      def: Date.now()
+      def: Date.now
     }
   ], {
     table: 'users'
